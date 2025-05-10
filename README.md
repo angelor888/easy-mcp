@@ -17,7 +17,7 @@ Deploy MCP services with these steps:
 2. **Clone Repository**:
 
    ```bash
-   git clone https://github.com/NovaProtocol/easy-mcp.git
+   git clone https://github.com/s123104/easy-mcp.git
    cd easy-mcp
    ```
 

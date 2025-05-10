@@ -17,7 +17,7 @@
 2. **複製儲存庫**：
 
    ```bash
-   git clone https://github.com/NovaProtocol/easy-mcp.git
+   git clone https://github.com/s123104/easy-mcp.git
    cd easy-mcp
    ```
 
