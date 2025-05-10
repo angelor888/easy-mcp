@@ -111,7 +111,7 @@
 - `custom_user_services/`：自訂服務目錄。
 - `docker-compose.yml`：Docker 服務定義。
 - `LICENSE`：MIT 授權。
-- `mcp_services/`：Node.js 服務原始碼。
+- `mcp-services/`：Node.js 服務原始碼。
 - `view/`：映射至 `mcp-filesystem` 容器。
 - `.env.example`, `.env`：環境變數。
 - `start.sh`, `start.bat`, `stop.sh`, `stop.bat`：啟動/停止腳本。

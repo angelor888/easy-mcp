@@ -1,7 +1,7 @@
 services:
   mcp-filesystem:
     build:
-      context: ./mcp_services
+      context: ./mcp-services
       dockerfile: Dockerfile
     container_name: docker-site-mcp-filesystem
     restart: unless-stopped
@@ -21,7 +21,7 @@ services:
 
   mcp-brave-search:
     build:
-      context: ./mcp_services
+      context: ./mcp-services
       dockerfile: brave.Dockerfile
     container_name: docker-site-mcp-brave-search
     restart: unless-stopped
@@ -39,7 +39,7 @@ services:
 
   mcp-puppeteer:
     build:
-      context: ./mcp_services
+      context: ./mcp-services
       dockerfile: puppeteer.Dockerfile
     container_name: docker-site-mcp-puppeteer
     restart: unless-stopped
@@ -55,7 +55,7 @@ services:
 
   mcp-memory:
     build:
-      context: ./mcp_services
+      context: ./mcp-services
       dockerfile: memory.Dockerfile
     container_name: docker-site-mcp-memory
     restart: unless-stopped
@@ -71,7 +71,7 @@ services:
 
   mcp-everything:
     build:
-      context: ./mcp_services
+      context: ./mcp-services
       dockerfile: everything.Dockerfile
     container_name: docker-site-mcp-everything
     restart: unless-stopped
