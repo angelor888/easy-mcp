@@ -1,0 +1,90 @@
+services:
+  mcp-filesystem:
+    build:
+      context: ./mcp_services
+      dockerfile: Dockerfile
+    container_name: docker-site-mcp-filesystem
+    restart: unless-stopped
+    volumes:
+      - ./view:/app/projects
+    environment:
+      - NODE_ENV=production
+      - MCP_EXCLUDED_PATTERNS=".env,.htpasswd,*.pem,*.key"
+      - PORT=8082
+    command: ["/app/projects"]
+    ports:
+      - "8082:8082"
+    networks:
+      - app_net
+    tty: true
+    stdin_open: true
+
+  mcp-brave-search:
+    build:
+      context: ./mcp_services
+      dockerfile: brave.Dockerfile
+    container_name: docker-site-mcp-brave-search
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=8083
+    ports:
+      - "8083:8083"
+    networks:
+      - app_net
+    tty: true
+    stdin_open: true
+
+  mcp-puppeteer:
+    build:
+      context: ./mcp_services
+      dockerfile: puppeteer.Dockerfile
+    container_name: docker-site-mcp-puppeteer
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=8084
+    ports:
+      - "8084:8084"
+    networks:
+      - app_net
+    tty: true
+    stdin_open: true
+
+  mcp-memory:
+    build:
+      context: ./mcp_services
+      dockerfile: memory.Dockerfile
+    container_name: docker-site-mcp-memory
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=8085
+    ports:
+      - "8085:8085"
+    networks:
+      - app_net
+    tty: true
+    stdin_open: true
+
+  mcp-everything:
+    build:
+      context: ./mcp_services
+      dockerfile: everything.Dockerfile
+    container_name: docker-site-mcp-everything
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=8086
+    ports:
+      - "8086:8086"
+    networks:
+      - app_net
+    tty: true
+    stdin_open: true
+
+networks:
+  app_net:
+    driver: bridge

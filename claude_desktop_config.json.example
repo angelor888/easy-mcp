@@ -1,0 +1,41 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "docker",
+      "args": ["exec", "-i", "docker-site-mcp-filesystem", "node", "dist/index.js", "/app/projects"],
+      "url": "http://localhost:8082"
+    },
+    "brave-search": {
+      "command": "docker",
+      "args": ["exec", "-i", "docker-site-mcp-brave-search", "node", "dist/index.js"],
+      "url": "http://localhost:8083",
+      "env": {
+        "BRAVE_API_KEY": "your_brave_api_key_here"
+      }
+    },
+    "puppeteer": {
+      "command": "docker",
+      "args": ["exec", "-i", "docker-site-mcp-puppeteer", "node", "dist/index.js"],
+      "url": "http://localhost:8084"
+    },
+    "memory": {
+      "command": "docker",
+      "args": ["exec", "-i", "docker-site-mcp-memory", "node", "dist/index.js"],
+      "url": "http://localhost:8085"
+    },
+    "everything": {
+      "command": "docker",
+      "args": ["exec", "-i", "docker-site-mcp-everything", "node", "dist/index.js"],
+      "url": "http://localhost:8086"
+    },
+    "time": {
+      "command": "uvx",
+      "args": ["mcp-server-time", "--local-timezone=Asia/Taipei"]
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    }
+  },
+  "globalShortcut": "Ctrl+Q"
+} 
