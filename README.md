@@ -1,117 +1,127 @@
-Dockerized MCP (Model Context Protocol) Services
+# Dockerized MCP (Model Context Protocol) Services
+
 This project streamlines deployment of Model Context Protocol (MCP) services using Docker and Docker Compose, enabling developers to integrate with clients like Claude Desktop. It provides clear instructions for macOS and Windows users.
-繁體中文 README | English
-Quick Start
+
+[繁體中文 README](./README.zh-TW.md) | **English**
+
+## Quick Start
+
 Deploy MCP services with these steps:
 
-Install Prerequisites:
+1. **Install Prerequisites**:
 
-Docker Desktop
-Git (git --version to verify)
-uvx (for Time/Fetch, verify with uvx --version)
+   - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+   - Git (`git --version` to verify)
+   - `uvx` (for Time/Fetch, verify with `uvx --version`)
 
-Clone Repository:
-git clone https://github.com/NovaProtocol/easy-mcp.git
-cd easy-mcp
+2. **Clone Repository**:
 
-Configure Environment:
-cp .env.example .env
+   ```bash
+   git clone https://github.com/NovaProtocol/easy-mcp.git
+   cd easy-mcp
+   ```
 
-Edit .env, add Brave Search API key.
+3. **Configure Environment**:
 
-Start Services:
+   ```bash
+   cp .env.example .env
+   ```
 
-macOS/Linux:chmod +x start.sh
-./start.sh
+   - Edit `.env`, add Brave Search API key.
 
-Windows: Run start.bat.
+4. **Start Services**:
 
-Verify:
+   - **macOS/Linux**:
+     ```bash
+     chmod +x start.sh
+     ./start.sh
+     ```
+   - **Windows**: Run `start.bat`.
 
-Run docker ps to confirm containers.
-Check client logs for connectivity.
+5. **Verify**:
+   - Run `docker ps` to confirm containers.
+   - Check client logs for connectivity.
 
-Included Services
+## Included Services
 
-Dockerized Services (managed by docker-compose):
+1. **Dockerized Services** (managed by `docker-compose`):
 
-Filesystem: Manages local files (mapped to ./view).
-Brave Search: Uses Brave Search API (requires API key).
-Puppeteer: Headless Chrome automation.
-Memory: In-memory storage.
-Everything: General-purpose MCP server.
+   - **Filesystem**: Manages local files (mapped to `./view`).
+   - **Brave Search**: Uses Brave Search API (requires API key).
+   - **Puppeteer**: Headless Chrome automation.
+   - **Memory**: In-memory storage.
+   - **Everything**: General-purpose MCP server.
 
-Local uvx Services (client-initiated via uvx):
+2. **Local `uvx` Services** (client-initiated via `uvx`):
+   - **Time**: Time functions.
+   - **Fetch**: URL content retrieval.
 
-Time: Time functions.
-Fetch: URL content retrieval.
+## Prerequisites
 
-Prerequisites
+- **Docker Desktop**:
 
-Docker Desktop:
+  - macOS/Windows: Install from [Docker](https://www.docker.com/products/docker-desktop/).
+  - Windows: Enable WSL 2.
+  - Verify: `docker --version`, `docker-compose --version`.
 
-macOS/Windows: Install from Docker.
-Windows: Enable WSL 2.
-Verify: docker --version, docker-compose --version.
+- **uvx**:
 
-uvx:
+  - Verify: `uvx --version`.
+  - Install per MCP or client documentation if needed.
 
-Verify: uvx --version.
-Install per MCP or client documentation if needed.
+- **Git**:
+  - macOS: Pre-installed or via [Homebrew](https://brew.sh/) (`brew install git`).
+  - Windows: Install from [Git](https://git-scm.com/download/win).
 
-Git:
+## Detailed Configuration
 
-macOS: Pre-installed or via Homebrew (brew install git).
-Windows: Install from Git.
+1. **Client Configuration (e.g., Claude Desktop)**:
 
-Detailed Configuration
+   - Config paths:
+     - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+     - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+     - Linux: `~/.config/Claude/claude_desktop_config.json`
+   - Backup config.
+   - Use `claude_desktop_config.json.example` to update API keys and URLs.
 
-Client Configuration (e.g., Claude Desktop):
+2. **Disabling Services**:
 
-Config paths:
-macOS: ~/Library/Application Support/Claude/claude_desktop_config.json
-Windows: %APPDATA%\Claude\claude_desktop_config.json
-Linux: ~/.config/Claude/claude_desktop_config.json
+   - Dockerized: Comment out service blocks in `docker-compose.yml`, rerun `docker-compose up --build -d`.
+   - uvx: Remove entries from client config.
 
-Backup config.
-Use claude_desktop_config.json.example to update API keys and URLs.
+3. **Custom Services**:
+   - See `custom_user_services/README.md` for adding Dockerized services.
 
-Disabling Services:
+## Stopping Services
 
-Dockerized: Comment out service blocks in docker-compose.yml, rerun docker-compose up --build -d.
-uvx: Remove entries from client config.
+- **Scripts**:
+  - macOS/Linux: `./stop.sh`
+  - Windows: `stop.bat`
+- **Docker Compose**:
+  ```bash
+  docker-compose down
+  ```
 
-Custom Services:
+## Project Structure
 
-See custom_user_services/README.md for adding Dockerized services.
+- `.gitignore`: Ignored files.
+- `claude_desktop_config.json.example`: Client config template.
+- `custom_user_services/`: Custom services directory.
+- `docker-compose.yml`: Docker service definitions.
+- `LICENSE`: MIT License.
+- `mcp_services/`: Node.js service code.
+- `view/`: Mapped to `mcp-filesystem` container.
+- `.env.example`, `.env`: Environment variables.
+- `start.sh`, `start.bat`, `stop.sh`, `stop.bat`: Start/stop scripts.
 
-Stopping Services
+## Troubleshooting
 
-Scripts:
-macOS/Linux: ./stop.sh
-Windows: stop.bat
+- **Docker**: Ensure Docker Desktop is running.
+- **Logs**: Run `docker-compose logs <service_name>`.
+- **Port Conflicts**: Adjust ports in `docker-compose.yml` and client config.
+- **.env**: Verify file and API keys.
+- **uvx**: Confirm installation and PATH.
 
-Docker Compose:docker-compose down
+## License
 
-Project Structure
-
-.gitignore: Ignored files.
-claude_desktop_config.json.example: Client config template.
-custom_user_services/: Custom services directory.
-docker-compose.yml: Docker service definitions.
-LICENSE: MIT License.
-mcp-services/: Node.js service code.
-view/: Mapped to mcp-filesystem container.
-.env.example, .env: Environment variables.
-start.sh, start.bat, stop.sh, stop.bat: Start/stop scripts.
-
-Troubleshooting
-
-Docker: Ensure Docker Desktop is running.
-Logs: Run docker-compose logs <service_name>.
-Port Conflicts: Adjust ports in docker-compose.yml and client config.
-.env: Verify file and API keys.
-uvx: Confirm installation and PATH.
-
-License
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](./LICENSE).
