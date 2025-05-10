@@ -1,4 +1,3 @@
-```batch
 @echo off
 REM Script to stop all MCP Docker services
 REM Version: 1.0.0
@@ -50,4 +49,3 @@ if %ERRORLEVEL% equ 0 (
   echo %MSG_ERROR%
   exit /b 1
 )
-```

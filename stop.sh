@@ -1,4 +1,3 @@
-```bash
 #!/bin/bash
 # Script to stop all MCP Docker services
 # Version: 1.0.0
@@ -50,4 +49,3 @@ else
   echo "$MSG_ERROR"
   exit 1
 fi
-```

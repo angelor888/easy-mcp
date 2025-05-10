@@ -1,4 +1,3 @@
-```bash
 #!/bin/bash
 # Script to build and start all MCP Docker services
 # Version: 1.0.0
@@ -70,4 +69,3 @@ else
   echo "$MSG_ERROR"
   exit 1
 fi
-```
