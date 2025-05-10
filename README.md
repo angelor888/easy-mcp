@@ -100,7 +100,7 @@ claude_desktop_config.json.example: Client config template.
 custom_user_services/: Custom services directory.
 docker-compose.yml: Docker service definitions.
 LICENSE: MIT License.
-mcp_services/: Node.js service code.
+mcp-services/: Node.js service code.
 view/: Mapped to mcp-filesystem container.
 .env.example, .env: Environment variables.
 start.sh, start.bat, stop.sh, stop.bat: Start/stop scripts.
