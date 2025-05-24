@@ -27,8 +27,7 @@ Deploy MCP services with these steps:
    cp .env.example .env
    ```
 
-   - Edit `.env` for any necessary environment variables for services other than Brave Search.
-   - For Brave Search: Create a file named `brave_api_key.txt` in the project root and paste your API key into it. This file is used by Docker Secrets (see Security Considerations).
+   - Edit `.env` to set your environment variables. This includes setting `BRAVE_API_KEY=your_api_key_here` for the Brave Search service, along with any other necessary variables.
 
 4. **Start Services**:
 
@@ -112,7 +111,7 @@ Deploy MCP services with these steps:
 - `LICENSE`: MIT License.
 - `mcp_services/`: Node.js service code.
 - `view/`: Mapped to `mcp-filesystem` container.
-- `.env.example`, `.env`: Environment variables. `brave_api_key.txt` is used for the Brave Search API key (see Security Considerations).
+ - `.env.example`, `.env`: Environment variables. The `BRAVE_API_KEY` for the Brave Search service is configured in the `.env` file (copied from `.env.example`).
 - `start.sh`, `start.bat`, `stop.sh`, `stop.bat`: Start/stop scripts.
 
 ## Troubleshooting
@@ -138,20 +137,15 @@ The `docker-compose.yml` file incorporates the following security measures:
 -   **Non-Root Users**: All services are configured to run as a non-root user (`1000:1000`) to reduce potential damage if a container is compromised.
 -   **Resource Limits**: Each service has `mem_limit` and `cpus` constraints defined to prevent resource exhaustion and denial-of-service scenarios.
 -   **Network Isolation**: Services are placed on a custom Docker network (`mcp-net`), which can be further configured to restrict inter-service communication if needed.
--   **Secrets Management (Brave Search)**: The Brave Search API key is managed using Docker Secrets via the `brave_api_key.txt` file. This is more secure than using environment variables directly for sensitive data.
+ -   **Secrets Management (Brave Search)**: The Brave Search API key is configured via the `BRAVE_API_KEY` environment variable, which should be set in the `.env` file. For production, consider more robust secrets management like HashiCorp Vault or cloud provider solutions.
 -   **Read-Only Volumes**: The `mcp-filesystem` service mounts its `./view` directory as read-only (`ro`) to prevent unauthorized modifications to these files from within the container.
 
 ### Managing Secrets
 
-The Brave Search API key is handled via Docker Secrets. You must create a file named `brave_api_key.txt` in the root directory of this project and place your API key there.
-```
-# Example: brave_api_key.txt
-YOUR_ACTUAL_BRAVE_SEARCH_API_KEY
-```
-This file is ignored by Git (see `.gitignore`). For production environments, consider using more robust secrets management tools like HashiCorp Vault or cloud provider-specific solutions.
+The Brave Search API key is now defined in the `.env` file (copied from `.env.example`) using the `BRAVE_API_KEY` variable. This key is then passed as an environment variable to the `mcp-brave-search` service.
+For production environments, it is highly recommended to use more robust secrets management tools like HashiCorp Vault or cloud provider-specific solutions instead of relying solely on `.env` files.
 
-Further information on Docker Secrets:
--   [Docker Secrets Documentation](https://docs.docker.com/engine/swarm/secrets/)
+While Docker Secrets is a valid approach for managing sensitive data (and you can learn more about it [here](https://docs.docker.com/engine/swarm/secrets/)), this project has been simplified to use environment variables for the Brave Search API key for easier setup.
 
 ### Brave Search Service Security (`./mcp-services/src/brave-search/`)
 
