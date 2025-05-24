@@ -27,7 +27,7 @@
    cp .env.example .env
    ```
 
-   - 編輯 `.env`，填入 Brave Search API 金鑰。
+   - 編輯 `.env` 檔案，設定您的環境變數。這包括為 Brave Search 服務設定 `BRAVE_API_KEY=您的API金鑰`，以及其他任何必要的變數。
 
 4. **啟動服務**：
 
@@ -113,7 +113,7 @@
 - `LICENSE`：MIT 授權。
 - `mcp-services/`：Node.js 服務原始碼。
 - `view/`：映射至 `mcp-filesystem` 容器。
-- `.env.example`, `.env`：環境變數。
+ - `.env.example`, `.env`：環境變數。Brave Search 服務的 `BRAVE_API_KEY` 在 `.env` 檔案中設定 (從 `.env.example` 複製)。
 - `start.sh`, `start.bat`, `stop.sh`, `stop.bat`：啟動/停止腳本。
 
 ## 疑難排解

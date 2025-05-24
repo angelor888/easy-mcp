@@ -34,13 +34,11 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=8083
-      - BRAVE_SEARCH_API_KEY_FILE=/run/secrets/brave_api_key
+      - BRAVE_API_KEY=${BRAVE_API_KEY}
     ports:
       - "8083:8083"
     networks:
       - mcp-net
-    secrets:
-      - brave_api_key
     tty: true
     stdin_open: true
 
@@ -107,7 +105,3 @@ networks:
     # Add internal: true if services should only communicate with each other and not externally,
     # except through explicitly mapped ports. For this task, we'll assume default bridge behavior is fine
     # unless further restrictions are needed.
-
-secrets:
-  brave_api_key:
-    file: ./brave_api_key.txt
