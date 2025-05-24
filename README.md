@@ -27,7 +27,8 @@ Deploy MCP services with these steps:
    cp .env.example .env
    ```
 
-   - Edit `.env`, add Brave Search API key.
+   - Edit `.env` for any necessary environment variables for services other than Brave Search.
+   - For Brave Search: Create a file named `brave_api_key.txt` in the project root and paste your API key into it. This file is used by Docker Secrets (see Security Considerations).
 
 4. **Start Services**:
 
@@ -46,8 +47,8 @@ Deploy MCP services with these steps:
 
 1. **Dockerized Services** (managed by `docker-compose`):
 
-   - **Filesystem**: Manages local files (mapped to `./view`).
-   - **Brave Search**: Uses Brave Search API (requires API key).
+   - **Filesystem**: Manages local files (mapped to `./view` in read-only mode).
+   - **Brave Search**: Uses Brave Search API (requires API key, managed via Docker Secrets from `brave_api_key.txt`).
    - **Puppeteer**: Headless Chrome automation.
    - **Memory**: In-memory storage.
    - **Everything**: General-purpose MCP server.
@@ -111,7 +112,7 @@ Deploy MCP services with these steps:
 - `LICENSE`: MIT License.
 - `mcp_services/`: Node.js service code.
 - `view/`: Mapped to `mcp-filesystem` container.
-- `.env.example`, `.env`: Environment variables.
+- `.env.example`, `.env`: Environment variables. `brave_api_key.txt` is used for the Brave Search API key (see Security Considerations).
 - `start.sh`, `start.bat`, `stop.sh`, `stop.bat`: Start/stop scripts.
 
 ## Troubleshooting
@@ -125,3 +126,59 @@ Deploy MCP services with these steps:
 ## License
 
 This project is licensed under the [MIT License](./LICENSE).
+
+## Security Considerations
+
+This project has been configured with several security best practices in mind. Understanding and maintaining these practices is crucial for a secure deployment.
+
+### Docker Compose Best Practices Implemented
+
+The `docker-compose.yml` file incorporates the following security measures:
+
+-   **Non-Root Users**: All services are configured to run as a non-root user (`1000:1000`) to reduce potential damage if a container is compromised.
+-   **Resource Limits**: Each service has `mem_limit` and `cpus` constraints defined to prevent resource exhaustion and denial-of-service scenarios.
+-   **Network Isolation**: Services are placed on a custom Docker network (`mcp-net`), which can be further configured to restrict inter-service communication if needed.
+-   **Secrets Management (Brave Search)**: The Brave Search API key is managed using Docker Secrets via the `brave_api_key.txt` file. This is more secure than using environment variables directly for sensitive data.
+-   **Read-Only Volumes**: The `mcp-filesystem` service mounts its `./view` directory as read-only (`ro`) to prevent unauthorized modifications to these files from within the container.
+
+### Managing Secrets
+
+The Brave Search API key is handled via Docker Secrets. You must create a file named `brave_api_key.txt` in the root directory of this project and place your API key there.
+```
+# Example: brave_api_key.txt
+YOUR_ACTUAL_BRAVE_SEARCH_API_KEY
+```
+This file is ignored by Git (see `.gitignore`). For production environments, consider using more robust secrets management tools like HashiCorp Vault or cloud provider-specific solutions.
+
+Further information on Docker Secrets:
+-   [Docker Secrets Documentation](https://docs.docker.com/engine/swarm/secrets/)
+
+### Brave Search Service Security (`./mcp-services/src/brave-search/`)
+
+The Brave Search service, located at `mcp-services/src/brave-search/`, interacts with external APIs and processes external data. It's important to be aware of potential risks:
+
+-   **Remote Code Execution (RCE) / Prompt Injection**: Depending on how the service processes inputs and constructs queries to the Brave Search API, there could be risks of injection attacks if not handled carefully. Regularly review the service's code for secure input validation and output encoding.
+-   **Static Analysis**: It is highly recommended to use static analysis security testing (SAST) tools to scan the codebase for potential vulnerabilities. Consider integrating tools like:
+    -   **Snyk**: [https://snyk.io/](https://snyk.io/) - Can help find and fix vulnerabilities in your code and dependencies.
+    -   **ESLint**: [https://eslint.org/](https://eslint.org/) - While primarily a linter, with appropriate plugins (e.g., `eslint-plugin-security`), it can help identify some security anti-patterns in JavaScript/TypeScript code.
+
+### Principle of Least Privilege
+
+The configurations aim to follow the principle of least privilege:
+-   Running services as non-root users.
+-   Mounting volumes as read-only where possible.
+This limits the potential impact of a security breach.
+
+### Image Security
+
+Consider implementing Docker Content Trust for signing and verifying images, ensuring that you are running legitimate and untampered container images.
+-   [Docker Content Trust Documentation](https://docs.docker.com/engine/security/trust/)
+
+### Runtime Sandboxing
+
+For an additional layer of security, especially for services that process untrusted input, explore runtime sandboxing solutions like gVisor. gVisor provides an additional isolation boundary between the containerized application and the host kernel.
+-   [gVisor Introduction](https://gvisor.dev/)
+
+### Further Learning & MCP Specifics
+
+-   For general MCP security best practices, please refer to the official Anthropic MCP documentation (if available publicly, otherwise adapt this line). A placeholder link: [https://docs.anthropic.com/mcp](https://docs.anthropic.com/mcp) (Please replace with the actual link if it differs or is internal).

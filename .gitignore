@@ -25,3 +25,4 @@ yarn-error.log
 
 *.log
 # 其他您不想提交的檔案或目錄
+brave_api_key.txt

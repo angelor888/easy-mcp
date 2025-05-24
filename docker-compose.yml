@@ -5,8 +5,11 @@ services:
       dockerfile: Dockerfile
     container_name: docker-site-mcp-filesystem
     restart: unless-stopped
+    user: "1000:1000"
+    mem_limit: "512m"
+    cpus: "0.5"
     volumes:
-      - ./view:/app/projects
+      - ./view:/app/projects:ro
     environment:
       - NODE_ENV=production
       - MCP_EXCLUDED_PATTERNS=".env,.htpasswd,*.pem,*.key"
@@ -15,7 +18,7 @@ services:
     ports:
       - "8082:8082"
     networks:
-      - app_net
+      - mcp-net
     tty: true
     stdin_open: true
 
@@ -25,15 +28,19 @@ services:
       dockerfile: brave.Dockerfile
     container_name: docker-site-mcp-brave-search
     restart: unless-stopped
-    env_file:
-      - .env
+    user: "1000:1000"
+    mem_limit: "512m"
+    cpus: "0.5"
     environment:
       - NODE_ENV=production
       - PORT=8083
+      - BRAVE_SEARCH_API_KEY_FILE=/run/secrets/brave_api_key
     ports:
       - "8083:8083"
     networks:
-      - app_net
+      - mcp-net
+    secrets:
+      - brave_api_key
     tty: true
     stdin_open: true
 
@@ -43,13 +50,16 @@ services:
       dockerfile: puppeteer.Dockerfile
     container_name: docker-site-mcp-puppeteer
     restart: unless-stopped
+    user: "1000:1000"
+    mem_limit: "512m"
+    cpus: "0.5"
     environment:
       - NODE_ENV=production
       - PORT=8084
     ports:
       - "8084:8084"
     networks:
-      - app_net
+      - mcp-net
     tty: true
     stdin_open: true
 
@@ -59,13 +69,16 @@ services:
       dockerfile: memory.Dockerfile
     container_name: docker-site-mcp-memory
     restart: unless-stopped
+    user: "1000:1000"
+    mem_limit: "512m"
+    cpus: "0.5"
     environment:
       - NODE_ENV=production
       - PORT=8085
     ports:
       - "8085:8085"
     networks:
-      - app_net
+      - mcp-net
     tty: true
     stdin_open: true
 
@@ -75,16 +88,26 @@ services:
       dockerfile: everything.Dockerfile
     container_name: docker-site-mcp-everything
     restart: unless-stopped
+    user: "1000:1000"
+    mem_limit: "512m"
+    cpus: "0.5"
     environment:
       - NODE_ENV=production
       - PORT=8086
     ports:
       - "8086:8086"
     networks:
-      - app_net
+      - mcp-net
     tty: true
     stdin_open: true
 
 networks:
-  app_net:
+  mcp-net:
     driver: bridge
+    # Add internal: true if services should only communicate with each other and not externally,
+    # except through explicitly mapped ports. For this task, we'll assume default bridge behavior is fine
+    # unless further restrictions are needed.
+
+secrets:
+  brave_api_key:
+    file: ./brave_api_key.txt
