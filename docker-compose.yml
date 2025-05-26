@@ -9,7 +9,7 @@ services:
     mem_limit: "512m"
     cpus: "0.5"
     volumes:
-      - ./view:/app/projects:ro
+      - ./view:/app/projects
     environment:
       - NODE_ENV=production
       - MCP_EXCLUDED_PATTERNS=".env,.htpasswd,*.pem,*.key"
