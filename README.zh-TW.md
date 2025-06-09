@@ -127,3 +127,8 @@
 ## 授權
 
 本專案採用 [MIT 授權](./LICENSE)。
+
+## 版本與變更紀錄
+
+目前版本紀錄在 [`version.txt`](./version.txt)，所有變更都記錄於 [`CHANGELOG.md`](./docs/CHANGELOG.md)。
+
