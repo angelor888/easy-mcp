@@ -176,3 +176,8 @@ For an additional layer of security, especially for services that process untrus
 ### Further Learning & MCP Specifics
 
 -   For general MCP security best practices, please refer to the official Anthropic MCP documentation (if available publicly, otherwise adapt this line). A placeholder link: [https://docs.anthropic.com/mcp](https://docs.anthropic.com/mcp) (Please replace with the actual link if it differs or is internal).
+
+## Versioning & Changelog
+
+The current version is stored in [`version.txt`](./version.txt). All notable changes are tracked in [`CHANGELOG.md`](./docs/CHANGELOG.md).
+
