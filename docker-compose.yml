@@ -22,25 +22,6 @@ services:
     tty: true
     stdin_open: true
 
-  mcp-brave-search:
-    build:
-      context: ./mcp-services
-      dockerfile: brave.Dockerfile
-    container_name: docker-site-mcp-brave-search
-    restart: unless-stopped
-    user: "1000:1000"
-    mem_limit: "512m"
-    cpus: "0.5"
-    environment:
-      - NODE_ENV=production
-      - PORT=8083
-      - BRAVE_API_KEY=${BRAVE_API_KEY}
-    ports:
-      - "8083:8083"
-    networks:
-      - mcp-net
-    tty: true
-    stdin_open: true
 
   mcp-puppeteer:
     build:
