@@ -24,8 +24,7 @@
     "watch": "npm run watch --workspaces",
     "clean": "npm run clean --workspaces",
     "test": "npm run test --workspaces",
-    "lint": "npm run lint --workspaces",
-    "prepare": "npm run build"
+    "lint": "npm run lint --workspaces"
   },
   "dependencies": {
     "@modelcontextprotocol/server-filesystem": "^0.6.2",

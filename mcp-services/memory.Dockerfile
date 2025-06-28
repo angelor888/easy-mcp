@@ -1,36 +1,27 @@
-FROM node:22.12-alpine AS builder
+FROM node:22-alpine
+
+# 設置工作目錄
 WORKDIR /app
-
-# 複製 package.json 和相關配置文件
-COPY package.json package-lock.json tsconfig.json ./
-
-# 安裝所有依賴
-RUN npm install
-
-# 複製源代碼
-COPY . .
-
-# 構建官方 Memory 服務
-RUN npm run build --workspace=@modelcontextprotocol/server-memory
-
-FROM node:22-alpine AS release
-WORKDIR /app
-
-# 複製構建產物
-COPY --from=builder /app/node_modules/@modelcontextprotocol/server-memory/dist /app/dist
-COPY --from=builder /app/node_modules/@modelcontextprotocol/server-memory/package.json /app/package.json
 
 # 創建數據目錄
 RUN mkdir -p /app/data
+
+# 安裝 memory 服務器（全局安裝）
+RUN npm install -g @modelcontextprotocol/server-memory
 
 # 設置環境變數
 ENV NODE_ENV=production
 ENV PORT=8085
 ENV MEMORY_FILE_PATH=/app/data/memory.json
 
-# 安裝生產依賴
-RUN npm install --omit=dev --ignore-scripts
+# 創建非 root 用戶
+RUN addgroup -g 1001 -S mcp && \
+    adduser -S mcp -u 1001 -G mcp && \
+    chown -R mcp:mcp /app
 
-# 使用官方 ENTRYPOINT
-ENTRYPOINT ["node", "/app/dist/index.js"]
+# 切換到非 root 用戶
+USER mcp
+
+# 使用官方 memory 服務器
+ENTRYPOINT ["mcp-server-memory"]
 EXPOSE ${PORT} 

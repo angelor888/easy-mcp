@@ -1,7 +1,7 @@
 # Easy-MCP Docker Compose Configuration
-# Version: v2.1.1 - Pure MCP Services (Fixed)
-# Updated: 2025-06-29T02:55:00+08:00
-# Focus: Core MCP services with stable filesystem solution
+# Version: v2.3.0 - Optimized MCP Services
+# Updated: 2025-06-29T11:42:00+08:00
+# Focus: Performance optimized core MCP services with reduced noise
 
 # ======= 數據卷配置 =======
 volumes:
@@ -20,29 +20,28 @@ secrets:
     file: ./secrets/filesystem_key.txt
 
 services:
-  # ======= MCP Filesystem Service (Official Image) =======
+  # ======= MCP Filesystem Service (Optimized Build) =======
   mcp-filesystem:
-    image: node:22-alpine
+    build:
+      context: ./mcp-services
+      dockerfile: filesystem.Dockerfile
     container_name: mcp-filesystem-enhanced
     restart: unless-stopped
-    working_dir: /app
     volumes:
       - ./view:/app/projects:rw
     environment:
       - NODE_ENV=production
       - MCP_SERVICE_NAME=filesystem
       - MCP_LOG_LEVEL=info
-    command: >
-      sh -c "
-      npm install -g @modelcontextprotocol/server-filesystem &&
-      mcp-server-filesystem /app/projects
-      "
+      - MCP_ENABLE_WRITE=true
+      - MCP_ENABLE_DELETE=true
+      - MCP_ENABLE_CREATE=true
     stdin_open: true
     tty: true
     labels:
       - "mcp.service=filesystem"
       - "mcp.type=core"
-      - "mcp.version=2.1.1"
+      - "mcp.version=2.3.0"
       - "mcp.permissions=read,write,create,delete"
 
   # ======= MCP Puppeteer Service =======
@@ -66,7 +65,7 @@ services:
     labels:
       - "mcp.service=puppeteer"
       - "mcp.type=automation"
-      - "mcp.version=2.1.1"
+      - "mcp.version=2.3.0"
 
   # ======= MCP Memory Service (Official Configuration) =======
   mcp-memory:
@@ -87,10 +86,10 @@ services:
     labels:
       - "mcp.service=memory"
       - "mcp.type=storage"
-      - "mcp.version=2.2.0"
+      - "mcp.version=2.3.0"
       - "mcp.features=knowledge-graph,persistence"
 
-  # ======= MCP Everything Service =======
+  # ======= MCP Everything Service (Optimized) =======
   mcp-everything:
     build:
       context: ./mcp-services
@@ -101,13 +100,15 @@ services:
       - NODE_ENV=production
       - MCP_SERVICE_NAME=everything
       - MCP_FEATURE_FLAGS=echo,add,longRunning,sampling
-      - MCP_LOG_LEVEL=info
-      - MCP_ENABLE_METRICS=true
+      - MCP_LOG_LEVEL=warn
+      - MCP_ENABLE_METRICS=false
+      - MCP_DEMO_MODE=false
+      - MCP_NOTIFICATION_INTERVAL=300000
     stdin_open: true
     tty: true
     labels:
       - "mcp.service=everything"
       - "mcp.type=utility"
-      - "mcp.version=2.1.1"
+      - "mcp.version=2.3.0"
 
 
