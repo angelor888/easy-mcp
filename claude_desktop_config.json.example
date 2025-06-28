@@ -5,14 +5,6 @@
       "args": ["exec", "-i", "docker-site-mcp-filesystem", "node", "dist/index.js", "/app/projects"],
       "url": "http://localhost:8082"
     },
-    "brave-search": {
-      "command": "docker",
-      "args": ["exec", "-i", "docker-site-mcp-brave-search", "node", "dist/index.js"],
-      "url": "http://localhost:8083",
-      "env": {
-        "BRAVE_API_KEY": "your_brave_api_key_here"
-      }
-    },
     "puppeteer": {
       "command": "docker",
       "args": ["exec", "-i", "docker-site-mcp-puppeteer", "node", "dist/index.js"],
