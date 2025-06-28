@@ -332,9 +332,9 @@ This project is licensed under the [MIT License](LICENSE) - see the LICENSE file
 
 ## 🔗 Release Information
 
-- **Current Version**: v2.1.0
+- **Current Version**: v2.3.0
 - **Release Date**: 2025-06-29
-- **Key Features**: True one-click deployment, intelligent environment detection and auto-installation
+- **Key Features**: 專案架構專業化重構，MCP 服務集合最佳化，完整的 monorepo 管理
 - **Changelog**: [docs/CHANGELOG.md](docs/CHANGELOG.md)
 - **Repository**: [GitHub](https://github.com/s123104/easy-mcp)
 
