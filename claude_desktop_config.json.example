@@ -1,53 +1,57 @@
 {
   "mcpServers": {
-    "mcp-filesystem": {
+    "filesystem": {
       "command": "docker",
       "args": [
         "exec", "-i", 
         "mcp-filesystem-enhanced",
-        "node", "/app/dist/index.js", "/app/projects"
-      ],
-      "env": {
-        "MCP_SERVICE": "filesystem",
-        "MCP_VERSION": "v2.1.0",
-        "MCP_PERMISSIONS": "read,write,create,delete"
-      }
+        "mcp-server-filesystem", 
+        "/app/projects"
+      ]
     },
-    "mcp-puppeteer": {
+    "memory": {
       "command": "docker",
       "args": [
         "exec", "-i",
-        "mcp-puppeteer-enhanced", 
-        "node", "/app/dist/index.js"
+        "mcp-memory-enhanced", 
+        "mcp-knowledge-graph",
+        "--memory-path", "/app/data/memory.jsonl",
+        "--contexts-directory", "/app/contexts"
       ],
-      "env": {
-        "MCP_SERVICE": "puppeteer",
-        "MCP_VERSION": "v2.1.0"
-      }
+      "autoapprove": [
+        "create_entities",
+        "create_relations", 
+        "add_observations",
+        "delete_entities",
+        "delete_observations",
+        "delete_relations",
+        "read_graph",
+        "search_nodes",
+        "open_nodes",
+        "update_entities",
+        "update_relations",
+        "list_contexts",
+        "get_active_context",
+        "set_active_context",
+        "add_context",
+        "remove_context"
+      ]
     },
-    "mcp-memory": {
+    "puppeteer": {
       "command": "docker",
       "args": [
         "exec", "-i",
-        "mcp-memory-enhanced",
+        "mcp-puppeteer-enhanced",
         "node", "/app/dist/index.js"
-      ],
-      "env": {
-        "MCP_SERVICE": "memory",
-        "MCP_VERSION": "v2.1.0"
-      }
+      ]
     },
-    "mcp-everything": {
-      "command": "docker",
+    "everything": {
+      "command": "docker", 
       "args": [
         "exec", "-i",
         "mcp-everything-enhanced",
         "node", "/app/dist/index.js"
-      ],
-      "env": {
-        "MCP_SERVICE": "everything",
-        "MCP_VERSION": "v2.1.0"
-      }
+      ]
     },
     "mcp-time": {
       "command": "uvx",

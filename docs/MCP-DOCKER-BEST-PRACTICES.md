@@ -32,8 +32,7 @@ Easy-MCP v2.1.1 已成功實施基於 2025 年最新標準的 MCP (Model Context
 
 #### Prometheus 權限問題修復
 **問題**: Prometheus 容器因權限拒絕錯誤不斷重啟
-```
-level=ERROR source=query_logger.go:113 msg="Error opening query log file" 
+```level=ERROR source=query_logger.go:113 msg="Error opening query log file" 
 component=activeQueryTracker file=/prometheus/queries.active err="open /prometheus/queries.active: permission denied"
 ```
 
