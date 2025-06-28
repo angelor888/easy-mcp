@@ -1,88 +1,113 @@
+# Easy-MCP Docker Compose Configuration
+# Version: v2.1.1 - Pure MCP Services (Fixed)
+# Updated: 2025-06-29T02:55:00+08:00
+# Focus: Core MCP services with stable filesystem solution
+
+# ======= 數據卷配置 =======
+volumes:
+  mcp-filesystem-data:
+    driver: local
+  mcp-memory-data:
+    driver: local
+  mcp-logs:
+    driver: local
+
+# ======= Secrets 管理 =======
+secrets:
+  mcp_secret_key:
+    file: ./secrets/mcp_secret.txt
+  filesystem_access_key:
+    file: ./secrets/filesystem_key.txt
+
 services:
+  # ======= MCP Filesystem Service (Official Image) =======
   mcp-filesystem:
-    build:
-      context: ./mcp-services
-      dockerfile: Dockerfile
-    container_name: docker-site-mcp-filesystem
+    image: node:22-alpine
+    container_name: mcp-filesystem-enhanced
     restart: unless-stopped
-    user: "1000:1000"
-    mem_limit: "512m"
-    cpus: "0.5"
+    working_dir: /app
     volumes:
-      - ./view:/app/projects
+      - ./view:/app/projects:rw
     environment:
       - NODE_ENV=production
-      - MCP_EXCLUDED_PATTERNS=".env,.htpasswd,*.pem,*.key"
-      - PORT=8082
-    command: ["/app/projects"]
-    ports:
-      - "8082:8082"
-    networks:
-      - mcp-net
-    tty: true
+      - MCP_SERVICE_NAME=filesystem
+      - MCP_LOG_LEVEL=info
+    command: >
+      sh -c "
+      npm install -g @modelcontextprotocol/server-filesystem &&
+      mcp-server-filesystem /app/projects
+      "
     stdin_open: true
+    tty: true
+    labels:
+      - "mcp.service=filesystem"
+      - "mcp.type=core"
+      - "mcp.version=2.1.1"
+      - "mcp.permissions=read,write,create,delete"
 
-
+  # ======= MCP Puppeteer Service =======
   mcp-puppeteer:
     build:
       context: ./mcp-services
       dockerfile: puppeteer.Dockerfile
-    container_name: docker-site-mcp-puppeteer
+    container_name: mcp-puppeteer-enhanced
     restart: unless-stopped
-    user: "1000:1000"
-    mem_limit: "512m"
-    cpus: "0.5"
+    shm_size: "2gb"
     environment:
       - NODE_ENV=production
-      - PORT=8084
-    ports:
-      - "8084:8084"
-    networks:
-      - mcp-net
-    tty: true
+      - MCP_SERVICE_NAME=puppeteer
+      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
+      - PUPPETEER_ARGS=--no-sandbox,--disable-setuid-sandbox,--disable-dev-shm-usage
+      - MCP_HEADLESS=true
+      - MCP_TIMEOUT=30000
+      - MCP_LOG_LEVEL=info
     stdin_open: true
+    tty: true
+    labels:
+      - "mcp.service=puppeteer"
+      - "mcp.type=automation"
+      - "mcp.version=2.1.1"
 
+  # ======= MCP Memory Service =======
   mcp-memory:
     build:
       context: ./mcp-services
       dockerfile: memory.Dockerfile
-    container_name: docker-site-mcp-memory
+    container_name: mcp-memory-enhanced
     restart: unless-stopped
-    user: "1000:1000"
-    mem_limit: "512m"
-    cpus: "0.5"
+    volumes:
+      - mcp-memory-data:/app/data:rw
     environment:
       - NODE_ENV=production
-      - PORT=8085
-    ports:
-      - "8085:8085"
-    networks:
-      - mcp-net
-    tty: true
+      - MCP_SERVICE_NAME=memory
+      - MCP_MEMORY_LIMIT=512MB
+      - MCP_PERSISTENCE=true
+      - MCP_LOG_LEVEL=info
     stdin_open: true
+    tty: true
+    labels:
+      - "mcp.service=memory"
+      - "mcp.type=storage"
+      - "mcp.version=2.1.1"
 
+  # ======= MCP Everything Service =======
   mcp-everything:
     build:
       context: ./mcp-services
       dockerfile: everything.Dockerfile
-    container_name: docker-site-mcp-everything
+    container_name: mcp-everything-enhanced
     restart: unless-stopped
-    user: "1000:1000"
-    mem_limit: "512m"
-    cpus: "0.5"
     environment:
       - NODE_ENV=production
-      - PORT=8086
-    ports:
-      - "8086:8086"
-    networks:
-      - mcp-net
-    tty: true
+      - MCP_SERVICE_NAME=everything
+      - MCP_FEATURE_FLAGS=echo,add,longRunning,sampling
+      - MCP_LOG_LEVEL=info
+      - MCP_ENABLE_METRICS=true
     stdin_open: true
+    tty: true
+    labels:
+      - "mcp.service=everything"
+      - "mcp.type=utility"
+      - "mcp.version=2.1.1"
 
-networks:
-  mcp-net:
-    driver: bridge
-    # Add internal: true if services should only communicate with each other and not externally,
-    # except through explicitly mapped ports. For this task, we'll assume default bridge behavior is fine
-    # unless further restrictions are needed.
+

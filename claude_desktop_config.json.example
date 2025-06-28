@@ -1,33 +1,72 @@
 {
   "mcpServers": {
-    "filesystem": {
+    "mcp-filesystem": {
       "command": "docker",
-      "args": ["exec", "-i", "docker-site-mcp-filesystem", "node", "dist/index.js", "/app/projects"],
-      "url": "http://localhost:8082"
+      "args": [
+        "exec", "-i", 
+        "mcp-filesystem-enhanced",
+        "node", "/app/dist/index.js", "/app/projects"
+      ],
+      "env": {
+        "MCP_SERVICE": "filesystem",
+        "MCP_VERSION": "v2.1.0",
+        "MCP_PERMISSIONS": "read,write,create,delete"
+      }
     },
-    "puppeteer": {
+    "mcp-puppeteer": {
       "command": "docker",
-      "args": ["exec", "-i", "docker-site-mcp-puppeteer", "node", "dist/index.js"],
-      "url": "http://localhost:8084"
+      "args": [
+        "exec", "-i",
+        "mcp-puppeteer-enhanced", 
+        "node", "/app/dist/index.js"
+      ],
+      "env": {
+        "MCP_SERVICE": "puppeteer",
+        "MCP_VERSION": "v2.1.0"
+      }
     },
-    "memory": {
+    "mcp-memory": {
       "command": "docker",
-      "args": ["exec", "-i", "docker-site-mcp-memory", "node", "dist/index.js"],
-      "url": "http://localhost:8085"
+      "args": [
+        "exec", "-i",
+        "mcp-memory-enhanced",
+        "node", "/app/dist/index.js"
+      ],
+      "env": {
+        "MCP_SERVICE": "memory",
+        "MCP_VERSION": "v2.1.0"
+      }
     },
-    "everything": {
+    "mcp-everything": {
       "command": "docker",
-      "args": ["exec", "-i", "docker-site-mcp-everything", "node", "dist/index.js"],
-      "url": "http://localhost:8086"
+      "args": [
+        "exec", "-i",
+        "mcp-everything-enhanced",
+        "node", "/app/dist/index.js"
+      ],
+      "env": {
+        "MCP_SERVICE": "everything",
+        "MCP_VERSION": "v2.1.0"
+      }
     },
-    "time": {
+    "mcp-time": {
       "command": "uvx",
       "args": ["mcp-server-time", "--local-timezone=Asia/Taipei"]
     },
-    "fetch": {
-      "command": "uvx",
+    "mcp-fetch": {
+      "command": "uvx", 
       "args": ["mcp-server-fetch"]
     }
   },
-  "globalShortcut": "Ctrl+Q"
+  "globalShortcut": "Ctrl+Shift+.",
+  "allowedOrigins": [
+    "localhost:8080",
+    "127.0.0.1:8080"
+  ],
+  "mcpSettings": {
+    "timeout": 30000,
+    "maxRetries": 3,
+    "retryDelay": 1000,
+    "logLevel": "info"
+  }
 } 
