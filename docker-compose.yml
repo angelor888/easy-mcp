@@ -9,8 +9,6 @@ volumes:
     driver: local
   mcp-memory-data:
     driver: local
-  mcp-memory-contexts:
-    driver: local
   mcp-logs:
     driver: local
 
@@ -70,7 +68,7 @@ services:
       - "mcp.type=automation"
       - "mcp.version=2.1.1"
 
-  # ======= MCP Memory Service (Enhanced Knowledge Graph) =======
+  # ======= MCP Memory Service (Official Configuration) =======
   mcp-memory:
     build:
       context: ./mcp-services
@@ -79,30 +77,18 @@ services:
     restart: unless-stopped
     volumes:
       - mcp-memory-data:/app/data:rw
-      - mcp-memory-contexts:/app/contexts:rw
-      - ./view:/app/projects:ro  # 專案目錄讀取權限
     environment:
       - NODE_ENV=production
       - MCP_SERVICE_NAME=memory
-      - MEMORY_FILE_PATH=/app/data/memory.jsonl
-      - CONTEXTS_FILE_PATH=/app/contexts/contexts.json
-      - MCP_MEMORY_LIMIT=1024MB
-      - MCP_PERSISTENCE=true
+      - MEMORY_FILE_PATH=/app/data/memory.json
       - MCP_LOG_LEVEL=info
-      - MCP_ENABLE_VERSIONING=true
-      - MCP_ENABLE_PROJECT_DETECTION=true
-      - MCP_PROJECT_MARKERS=package.json,.git,pyproject.toml,docker-compose.yml
-      - MCP_MAX_PROJECT_DEPTH=5
-      - MCP_AUTO_CONTEXT_SWITCH=true
-      - MCP_BACKUP_ENABLED=true
-      - MCP_BACKUP_INTERVAL=3600000  # 每小時備份
     stdin_open: true
     tty: true
     labels:
       - "mcp.service=memory"
       - "mcp.type=storage"
-      - "mcp.version=2.1.1"
-      - "mcp.features=knowledge-graph,multi-context,project-detection,versioning"
+      - "mcp.version=2.2.0"
+      - "mcp.features=knowledge-graph,persistence"
 
   # ======= MCP Everything Service =======
   mcp-everything:
