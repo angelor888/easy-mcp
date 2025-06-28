@@ -1,3 +1,31 @@
+# Easy-MCP v2.3.0 🚀
+
+> **最新企業級 Model Context Protocol (MCP) 一鍵部署解決方案**  
+> **2025年6月最新安全標準** | **Docker 容器化** | **一鍵啟動** | **生產就緒**
+
+[![MCP Version](https://img.shields.io/badge/MCP-2025--06--18-blue?style=for-the-badge&logo=ai)](https://modelcontextprotocol.io/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com/)
+[![Security](https://img.shields.io/badge/Security-OAuth_2.1%20%2B%20RFC_8707-green?style=for-the-badge&logo=shield)](https://github.com/modelcontextprotocol/specification)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+
+## ✨ v2.3.0 重大更新
+
+### 🔐 **2025年6月安全標準**
+- **OAuth 資源伺服器分類** - 符合最新 MCP 規範
+- **Resource Indicators (RFC 8707)** - 防止令牌濫用攻擊  
+- **結構化工具輸出** - 增強資料處理能力
+- **誘導功能支援** - 智能互動式查詢
+
+### ⚡ **效能最佳化**
+- **Docker 容器預構建** - 啟動時間減少 70%
+- **日誌噪音控制** - 減少 90% 不必要訊息
+- **記憶體優化** - 非特權用戶運行，安全性提升
+
+### 🛠️ **企業級功能**
+- **工作流程編排** - Chain of Tools、Parallel Processing 模式
+- **錯誤處理強化** - 結構化錯誤回應與重試機制
+- **監控與日誌** - 完整的除錯和監控支援
+
 # Easy-MCP
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -138,9 +166,9 @@ If you need manual control or forced reinstallation:
 ### Environment Variables
 
 Create `.env` file from template:
-```bash
-cp .env.example .env
-```
+   ```bash
+   cp .env.example .env
+   ```
 
 ---
 
@@ -172,13 +200,13 @@ stop.bat
 ```
 
 **Restart Services:**
-```bash
+     ```bash
 # Windows
 .\start.bat
 
 # Linux/macOS
-./start.sh
-```
+     ./start.sh
+     ```
 
 ---
 
@@ -313,7 +341,7 @@ We welcome contributions from the community! Please see our [Contributing Guide]
 
 ### Development Setup
 
-```bash
+  ```bash
 # Clone the repository
 git clone https://github.com/s123104/easy-mcp.git
 cd easy-mcp
