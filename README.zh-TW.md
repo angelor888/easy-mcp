@@ -1,5 +1,7 @@
 # Easy-MCP v2.4.0 🚀
 
+**🌐 Language / 語言選擇**: [English](README.md) | [繁體中文](README.zh-TW.md)
+
 > **企業級模型上下文協定 (MCP) 一鍵部署解決方案**  
 > **2025 年最新安全標準** | **Docker 容器化** | **一鍵啟動** | **生產就緒**
 
@@ -7,20 +9,6 @@
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com/)
 [![Security](https://img.shields.io/badge/Security-Enterprise--Grade-green?style=for-the-badge&logo=shield)](https://github.com/modelcontextprotocol/specification)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
-
-## ✨ v2.4.0 重大更新
-
-### 🧹 **專案架構清理和專業化**
-- **配置最佳化** - 從 Cursor mcp.json 移除 filesystem（內建功能優化）
-- **專案結構清理** - 移除重複文檔，達到專業開源標準
-- **專注核心服務** - 3 個核心 MCP 服務：memory、puppeteer、everything
-- **向後相容** - 所有功能完全保留，Claude Desktop 配置不變
-
-### 🔐 **2025 年安全標準實施**
-- **OAuth 資源伺服器分類** - 符合最新 MCP 規範
-- **Resource Indicators (RFC 8707)** - 防止令牌濫用攻擊
-- **結構化工具輸出** - 增強資料處理能力
-- **企業級安全** - 非 root 容器、網路隔離、資源限制
 
 ---
 
@@ -36,6 +24,7 @@
 - [貢獻](#-貢獻)
 - [授權](#-授權)
 - [支援](#-支援)
+- [更新日誌](#-更新日誌)
 
 ---
 
@@ -370,16 +359,6 @@ cd easy-mcp
 
 ---
 
-## 🔗 版本資訊
-
-- **目前版本**: v2.4.0
-- **發布日期**: 2025-06-29
-- **主要特色**: 專案架構清理和專業化，Cursor IDE 配置最佳化，專業開源標準
-- **變更記錄**: [docs/CHANGELOG.md](docs/CHANGELOG.md)
-- **儲存庫**: [GitHub](https://github.com/s123104/easy-mcp)
-
----
-
 ## 💬 支援
 
 - **📚 文檔**: [docs/](docs/)
@@ -426,6 +405,32 @@ cd easy-mcp
 ```
 
 **就是這麼簡單！🎉**
+
+---
+
+## 📅 更新日誌
+
+### ✨ v2.4.0 重大更新
+
+#### 🧹 **專案架構清理和專業化**
+- **配置最佳化** - 從 Cursor mcp.json 移除 filesystem（內建功能優化）
+- **專案結構清理** - 移除重複文檔，達到專業開源標準
+- **專注核心服務** - 3 個核心 MCP 服務：memory、puppeteer、everything
+- **向後相容** - 所有功能完全保留，Claude Desktop 配置不變
+
+#### 🔐 **2025 年安全標準實施**
+- **OAuth 資源伺服器分類** - 符合最新 MCP 規範
+- **Resource Indicators (RFC 8707)** - 防止令牌濫用攻擊
+- **結構化工具輸出** - 增強資料處理能力
+- **企業級安全** - 非 root 容器、網路隔離、資源限制
+
+### 🔗 版本資訊
+
+- **目前版本**: v2.4.0
+- **發布日期**: 2025-06-29
+- **主要特色**: 專案架構清理和專業化，Cursor IDE 配置最佳化，專業開源標準
+- **完整變更記錄**: [docs/CHANGELOG.md](docs/CHANGELOG.md)
+- **儲存庫**: [GitHub](https://github.com/s123104/easy-mcp)
 
 ---
 

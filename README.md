@@ -1,5 +1,7 @@
 # Easy-MCP v2.4.0 🚀
 
+**🌐 Language / 語言選擇**: [English](README.md) | [繁體中文](README.zh-TW.md)
+
 > **Enterprise-grade Model Context Protocol (MCP) One-Click Deployment Solution**  
 > **2025 Latest Security Standards** | **Docker Containerized** | **One-Click Launch** | **Production Ready**
 
@@ -7,20 +9,6 @@
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com/)
 [![Security](https://img.shields.io/badge/Security-Enterprise--Grade-green?style=for-the-badge&logo=shield)](https://github.com/modelcontextprotocol/specification)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
-
-## ✨ v2.4.0 Major Updates
-
-### 🧹 **Project Architecture Cleanup and Professionalization**
-- **Configuration Optimization** - Removed filesystem from Cursor mcp.json (built-in functionality optimization)
-- **Project Structure Cleanup** - Removed duplicate documents, achieving professional open-source standards  
-- **Core Service Focus** - 3 core MCP services: memory, puppeteer, everything
-- **Backward Compatibility** - All functions fully preserved, Claude Desktop configuration unchanged
-
-### 🔐 **2025 Security Standards Implementation**
-- **OAuth Resource Server Classification** - Compliant with latest MCP specifications
-- **Resource Indicators (RFC 8707)** - Protection against token misuse attacks
-- **Structured Tool Output** - Enhanced data processing capabilities
-- **Enterprise-grade Security** - Non-root containers, network isolation, resource limits
 
 ---
 
@@ -36,6 +24,7 @@
 - [Contributing](#-contributing)
 - [License](#-license)
 - [Support](#-support)
+- [Changelog](#-changelog)
 
 ---
 
@@ -370,16 +359,6 @@ This project is licensed under the [MIT License](LICENSE) - see the LICENSE file
 
 ---
 
-## 🔗 Release Information
-
-- **Current Version**: v2.4.0
-- **Release Date**: 2025-06-29
-- **Key Features**: Project architecture cleanup and professionalization, Cursor IDE configuration optimization, professional open-source standards
-- **Changelog**: [docs/CHANGELOG.md](docs/CHANGELOG.md)
-- **Repository**: [GitHub](https://github.com/s123104/easy-mcp)
-
----
-
 ## 💬 Support
 
 - **📚 Documentation**: [docs/](docs/)
@@ -426,6 +405,32 @@ cd easy-mcp
 ```
 
 **It's that simple! 🎉**
+
+---
+
+## 📅 Changelog
+
+### ✨ v2.4.0 Major Updates
+
+#### 🧹 **Project Architecture Cleanup and Professionalization**
+- **Configuration Optimization** - Removed filesystem from Cursor mcp.json (built-in functionality optimization)
+- **Project Structure Cleanup** - Removed duplicate documents, achieving professional open-source standards  
+- **Core Service Focus** - 3 core MCP services: memory, puppeteer, everything
+- **Backward Compatibility** - All functions fully preserved, Claude Desktop configuration unchanged
+
+#### 🔐 **2025 Security Standards Implementation**
+- **OAuth Resource Server Classification** - Compliant with latest MCP specifications
+- **Resource Indicators (RFC 8707)** - Protection against token misuse attacks
+- **Structured Tool Output** - Enhanced data processing capabilities
+- **Enterprise-grade Security** - Non-root containers, network isolation, resource limits
+
+### 🔗 Release Information
+
+- **Current Version**: v2.4.0
+- **Release Date**: 2025-06-29
+- **Key Features**: Project architecture cleanup and professionalization, Cursor IDE configuration optimization, professional open-source standards
+- **Full Changelog**: [docs/CHANGELOG.md](docs/CHANGELOG.md)
+- **Repository**: [GitHub](https://github.com/s123104/easy-mcp)
 
 ---
 
