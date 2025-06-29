@@ -1,52 +1,33 @@
 {
-  "name": "@easy-mcp/services",
+  "name": "@modelcontextprotocol/servers",
   "private": true,
-  "version": "2.3.0",
-  "description": "Easy-MCP 專案的 Model Context Protocol 服務集合 - 專業的一鍵部署解決方案",
+  "version": "0.6.2",
+  "description": "Model Context Protocol servers",
   "license": "MIT",
-  "author": "Easy-MCP Team <chenb3681@gmail.com>",
-  "homepage": "https://github.com/s123104/easy-mcp",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/s123104/easy-mcp.git"
-  },
-  "bugs": "https://github.com/s123104/easy-mcp/issues",
+  "author": "Anthropic, PBC (https://anthropic.com)",
+  "homepage": "https://modelcontextprotocol.io",
+  "bugs": "https://github.com/modelcontextprotocol/servers/issues",
   "type": "module",
   "workspaces": [
-    "src/filesystem",
-    "src/memory", 
-    "src/puppeteer",
-    "src/everything"
+    "src/*"
   ],
   "files": [],
   "scripts": {
     "build": "npm run build --workspaces",
     "watch": "npm run watch --workspaces",
-    "clean": "npm run clean --workspaces",
-    "test": "npm run test --workspaces",
-    "lint": "npm run lint --workspaces"
+    "publish-all": "npm publish --workspaces --access public",
+    "link-all": "npm link --workspaces"
   },
   "dependencies": {
-    "@modelcontextprotocol/server-filesystem": "^0.6.2",
-    "@modelcontextprotocol/server-memory": "^0.6.2",
-    "@modelcontextprotocol/server-puppeteer": "^0.6.2",
-    "@modelcontextprotocol/server-everything": "^0.6.2"
-  },
-  "devDependencies": {
-    "@types/node": "^22.0.0",
-    "typescript": "^5.6.3"
-  },
-  "engines": {
-    "node": ">=22.0.0",
-    "npm": ">=10.0.0"
-  },
-  "keywords": [
-    "mcp",
-    "model-context-protocol",
-    "docker",
-    "claude",
-    "ai",
-    "automation",
-    "easy-deployment"
-  ]
+    "@modelcontextprotocol/server-everything": "*",
+    "@modelcontextprotocol/server-gdrive": "*",
+    "@modelcontextprotocol/server-postgres": "*",
+    "@modelcontextprotocol/server-puppeteer": "*",
+    "@modelcontextprotocol/server-slack": "*",
+    "@modelcontextprotocol/server-brave-search": "*",
+    "@modelcontextprotocol/server-memory": "*",
+    "@modelcontextprotocol/server-filesystem": "*",
+    "@modelcontextprotocol/server-everart": "*",
+    "@modelcontextprotocol/server-sequential-thinking": "*"
+  }
 }

@@ -1,34 +1,49 @@
-# Easy-MCP v2.4.0 🚀
+# Easy-MCP
 
-**🌐 Language / 語言選擇**: [English](README.md) | [繁體中文](README.zh-TW.md)
+[![授權: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Docker](https://img.shields.io/badge/Docker-20.10%2B-blue)](https://www.docker.com/)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/s123104/easy-mcp)](https://github.com/s123104/easy-mcp/releases)
+[![平台](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)](https://github.com/s123104/easy-mcp)
+[![歡迎 PR](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/s123104/easy-mcp/pulls)
 
-> **企業級模型上下文協定 (MCP) 一鍵部署解決方案**  
-> **2025 年最新安全標準** | **Docker 容器化** | **一鍵啟動** | **生產就緒**
+> **革命性一鍵模型上下文協定 (MCP) 服務部署**
 
-[![MCP Version](https://img.shields.io/badge/MCP-2025--06--29-blue?style=for-the-badge&logo=ai)](https://modelcontextprotocol.io/)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com/)
-[![Security](https://img.shields.io/badge/Security-Enterprise--Grade-green?style=for-the-badge&logo=shield)](https://github.com/modelcontextprotocol/specification)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+Easy-MCP 提供 **真正的一鍵部署** 模型上下文協定 (MCP) 服務，使用 Docker 和 Docker Compose 技術。具備 **全自動環境檢測**、**智能依賴安裝** 和 **零配置啟動** 功能，與 Claude Desktop 及其他 MCP 客戶端的整合變得前所未有的簡單。
+
+[English README](./README.md) | **繁體中文** | [文檔](./docs/) | [快速開始](./docs/QUICK-START.md)
+
+---
+
+## 🚀 特色功能
+
+- **🎯 一鍵部署**: 單一指令設置，零手動配置
+- **🧠 智能環境檢測**: 自動檢測並安裝缺失的依賴項目
+- **🔧 自動修復**: 在 Windows 上自動修復 WSL2 虛擬化問題
+- **🌐 跨平台支援**: 完整支援 Windows 10/11、macOS 和 Linux 發行版
+- **🐳 Docker 原生**: 容器化服務，具備資源隔離和安全性
+- **📊 即時監控**: 內建服務健康檢查和日誌記錄
+- **🔒 安全優先**: 非 root 容器、唯讀掛載和網路隔離
 
 ---
 
 ## 📋 目錄
 
-- [快速開始](#-快速開始)
-- [安裝](#-安裝)
-- [服務概覽](#-服務概覽)
-- [配置](#-配置)
-- [使用方法](#-使用方法)
-- [API 參考](#-api-參考)
-- [故障排除](#-故障排除)
-- [貢獻](#-貢獻)
-- [授權](#-授權)
-- [支援](#-支援)
-- [更新日誌](#-更新日誌)
+- [快速開始](#快速開始)
+- [安裝](#安裝)
+- [使用方法](#使用方法)
+- [服務概覽](#服務概覽)
+- [配置](#配置)
+- [API 參考](#api-參考)
+- [故障排除](#故障排除)
+- [貢獻](#貢獻)
+- [授權](#授權)
+- [支援](#支援)
 
 ---
 
-## 🚀 快速開始
+## ⚡ 快速開始
+
+**v2.1.0 新功能**: 革命性智能部署系統！
 
 ### 自動設置（推薦）
 
@@ -44,68 +59,11 @@
 
 **就是這麼簡單！** 系統會自動：
 - 🔍 檢測您的系統環境和缺失組件
-- 📦 安裝 Git、Docker Desktop 和必要工具
+- 📦 安裝 Git、Docker Desktop 和其他必要工具
 - 🔧 修復 WSL2 虛擬化問題（Windows）
 - 🐳 智能啟動 Docker 服務
 - ⚙️ 配置環境檔案和服務設定
 - 🚀 啟動所有 MCP 服務
-
----
-
-## 🎯 Cursor IDE 整合指南
-
-### 第一步：導入 MCP 配置
-
-1. **複製配置檔案**：
-   ```bash
-   # 將專案的 .cursor/mcp.json 複製到您的 Cursor IDE 專案
-   cp .cursor/mcp.json /path/to/your/project/.cursor/
-   ```
-
-2. **啟動 Easy-MCP 服務**：
-   ```bash
-   # 確保 Docker 服務正在運行
-   docker-compose up -d
-   ```
-
-3. **在 Cursor IDE 中啟用 MCP**：
-   - 開啟 Cursor IDE → Settings → Features → MCP
-   - 檢查 MCP 伺服器是否已自動偵測到
-   - 伺服器狀態應顯示為綠色（連線成功）
-
-### 第二步：可用的 MCP 工具
-
-在 Cursor Chat 中，您現在可以使用以下工具：
-
-- **知識圖譜記憶**：`easy-mcp-memory`
-  - 存儲和檢索語義記憶
-  - 建立知識關聯
-  
-- **瀏覽器自動化**：`easy-mcp-puppeteer`
-  - 網頁抓取和測試
-  - 自動化瀏覽器操作
-  
-- **多功能工具集**：`easy-mcp-everything`
-  - 文字處理、數據分析
-  - 開發輔助工具
-
-📝 **檔案操作**：Cursor IDE 內建檔案功能更加高效，無需額外 MCP 服務
-
-### 第三步：使用範例
-
-```
-🤖 Cursor Chat 範例：
-
-👤 請用記憶體工具記住這個專案的架構資訊
-
-🤖 AI 會自動調用 easy-mcp-memory 工具來儲存資訊
-
-👤 請幫我用瀏覽器工具截圖 https://example.com
-
-🤖 AI 會自動調用 easy-mcp-puppeteer 工具進行截圖
-
-📝 檔案操作請使用 Cursor 內建功能，更加高效！
-```
 
 ---
 
@@ -120,6 +78,8 @@
 | **Linux** | 現代發行版，4GB RAM |
 
 ### 手動安裝（進階用戶）
+
+如果您需要手動控制或強制重新安裝：
 
 **Windows:**
 ```bash
@@ -146,9 +106,9 @@
 ### Docker 服務（自動管理）
 | 服務 | 埠號 | 描述 | 狀態 |
 |------|------|------|------|
-| **🗂️ Filesystem** | 8082 | 本機檔案管理（供 Claude Desktop 使用） | ✅ 活躍 |
+| **🗂️ Filesystem** | 8082 | 本機檔案管理（唯讀映射至 `./view`） | ✅ 活躍 |
 | **🌐 Puppeteer** | 8084 | 無頭瀏覽器自動化 | ✅ 活躍 |
-| **🧠 Memory** | 8085 | 知識圖譜儲存服務 | ✅ 活躍 |
+| **🧠 Memory** | 8085 | 記憶體儲存服務 | ✅ 活躍 |
 | **🔧 Everything** | 8086 | 多功能 MCP 伺服器 | ✅ 活躍 |
 
 ### 本機 uvx 服務（客戶端啟動）
@@ -199,7 +159,7 @@ docker compose ps
 docker compose logs -f
 
 # 特定服務
-docker compose logs -f memory
+docker compose logs -f filesystem
 ```
 
 **停止服務:**
@@ -224,15 +184,20 @@ stop.bat
 
 ## 🔧 API 參考
 
-### Memory 服務（埠號 8085）
-- **端點**: `http://localhost:8085`
-- **功能**: 知識圖譜持久儲存
-- **特色**: 實體關係、語義搜尋
+### Filesystem 服務（埠號 8082）
+- **端點**: `http://localhost:8082`
+- **功能**: `./view` 目錄的唯讀存取
+- **用途**: 檔案瀏覽和內容讀取
 
 ### Puppeteer 服務（埠號 8084）
 - **端點**: `http://localhost:8084`
 - **功能**: 網頁自動化和爬蟲
 - **特色**: 截圖、PDF 生成、表單互動
+
+### Memory 服務（埠號 8085）
+- **端點**: `http://localhost:8085`
+- **功能**: 持久記憶體儲存
+- **特色**: 鍵值儲存、搜尋功能
 
 ### Everything 服務（埠號 8086）
 - **端點**: `http://localhost:8086`
@@ -271,6 +236,11 @@ docker compose logs <service_name>
 # Linux/macOS
 ./quick-setup.sh --force
 ```
+
+**4. 常見問題:**
+- **埠號衝突**: 服務會自動調整到可用埠號
+- **WSL2 問題**: 在 Windows 上執行 `scripts/WSL2-Docker-2025-Fix.ps1`
+- **權限拒絕**: 確保 Docker 守護程序以適當權限運行
 
 完整故障排除指南: [WSL2 故障排除指南](docs/WSL-Docker-修復指南.md)
 
@@ -314,7 +284,8 @@ easy-mcp/
 ├── 🛑 stop.bat, stop.sh                  # 服務停止腳本
 ├── 🐳 docker-compose.yml                 # 服務定義
 ├── ⚙️ claude_desktop_config.json.example # Claude 配置範本
-└── 🔑 .env.example                       # 環境變數範本
+├── 🔑 .env.example                       # 環境變數範本
+└── 📌 version.txt                        # 版本資訊 (v2.1.0)
 ```
 
 ---
@@ -359,6 +330,16 @@ cd easy-mcp
 
 ---
 
+## 🔗 版本資訊
+
+- **目前版本**: v2.1.0
+- **發布日期**: 2025-06-29
+- **主要特色**: 真正的一鍵部署，智能環境檢測與自動安裝
+- **變更記錄**: [docs/CHANGELOG.md](docs/CHANGELOG.md)
+- **儲存庫**: [GitHub](https://github.com/s123104/easy-mcp)
+
+---
+
 ## 💬 支援
 
 - **📚 文檔**: [docs/](docs/)
@@ -390,6 +371,25 @@ Easy-MCP 已經幫助成千上萬的開發者和團隊：
 
 ---
 
+## 💡 使用案例
+
+### 🏠 個人用戶
+- 快速設置本地 AI 開發環境
+- 實驗不同的 MCP 服務和功能
+- 學習模型上下文協定
+
+### 👥 開發團隊
+- 統一的開發環境設置
+- 快速的新成員入職
+- 一致的服務配置
+
+### 🏢 企業用戶
+- 可擴展的 MCP 服務架構
+- 安全的容器化部署
+- 完整的監控和日誌功能
+
+---
+
 ## 🚀 立即開始
 
 不要再等待了！立即體驗最先進的 MCP 服務部署解決方案：
@@ -408,35 +408,9 @@ cd easy-mcp
 
 ---
 
-## 📅 更新日誌
-
-### ✨ v2.4.0 重大更新
-
-#### 🧹 **專案架構清理和專業化**
-- **配置最佳化** - 從 Cursor mcp.json 移除 filesystem（內建功能優化）
-- **專案結構清理** - 移除重複文檔，達到專業開源標準
-- **專注核心服務** - 3 個核心 MCP 服務：memory、puppeteer、everything
-- **向後相容** - 所有功能完全保留，Claude Desktop 配置不變
-
-#### 🔐 **2025 年安全標準實施**
-- **OAuth 資源伺服器分類** - 符合最新 MCP 規範
-- **Resource Indicators (RFC 8707)** - 防止令牌濫用攻擊
-- **結構化工具輸出** - 增強資料處理能力
-- **企業級安全** - 非 root 容器、網路隔離、資源限制
-
-### 🔗 版本資訊
-
-- **目前版本**: v2.4.0
-- **發布日期**: 2025-06-29
-- **主要特色**: 專案架構清理和專業化，Cursor IDE 配置最佳化，專業開源標準
-- **完整變更記錄**: [docs/CHANGELOG.md](docs/CHANGELOG.md)
-- **儲存庫**: [GitHub](https://github.com/s123104/easy-mcp)
-
----
-
 <div align="center">
 
-**由 Easy-MCP 社群用 ❤️ 製作**
+**由 Easy-MCP 團隊用 ❤️ 製作**
 
 [⭐ 在 GitHub 上給我們星星](https://github.com/s123104/easy-mcp) | [🐛 報告錯誤](https://github.com/s123104/easy-mcp/issues) | [💡 請求功能](https://github.com/s123104/easy-mcp/discussions)
 
