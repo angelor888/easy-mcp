@@ -3,24 +3,18 @@
 > **最新企業級 Model Context Protocol (MCP) 一鍵部署解決方案**  
 > **2025年6月最新安全標準** | **Docker 容器化** | **一鍵啟動** | **生產就緒**
 
-[![MCP Version](https://img.shields.io/badge/MCP-2025--06--29-blue?style=for-the-badge&logo=ai)](https://modelcontextprotocol.io/)
+[![MCP Version](https://img.shields.io/badge/MCP-2025--06--18-blue?style=for-the-badge&logo=ai)](https://modelcontextprotocol.io/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com/)
 [![Security](https://img.shields.io/badge/Security-OAuth_2.1%20%2B%20RFC_8707-green?style=for-the-badge&logo=shield)](https://github.com/modelcontextprotocol/specification)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 ## ✨ v2.4.0 重大更新
 
-### 🧹 **專案架構重構**
-- **核心服務精簡** - 專注於 Cursor IDE 無法內建的專業功能
-- **Filesystem 服務移除** - Cursor IDE 已內建完整檔案系統，移除重複服務
-- **專案結構清理** - 移除測試檔案和重複文檔，採用專業開源標準
-- **配置最佳化** - 簡化 `.cursor/mcp.json`，僅保留核心 3 個服務
-
-### 🎯 **Cursor IDE 原生整合**
-- **標準 mcp.json 格式** - 符合 Cursor IDE 2025年6月最新標準
-- **Docker 容器整合** - 直接連接到 Docker 服務，無需額外配置
-- **一鍵導入配置** - 複製 `.cursor/mcp.json` 即可在 Cursor IDE 中使用
-- **核心功能支援** - 記憶體、瀏覽器自動化、多功能工具集
+### 🧹 **專案架構清理和專業化**
+- **配置最佳化** - 從 Cursor mcp.json 移除 filesystem（內建功能優化）
+- **專案結構清理** - 移除重複文檔，達到專業開源標準
+- **專注核心服務** - 3個核心 MCP 服務：memory、puppeteer、everything
+- **向後相容** - 所有功能完全保留，Claude Desktop 配置不變
 
 ## ✨ v2.3.0 重大更新
 
@@ -120,25 +114,29 @@ Easy-MCP provides **真正的一鍵部署** of Model Context Protocol (MCP) serv
   - 文字處理、數據分析
   - 開發輔助工具
 
+📝 **檔案操作**：Cursor IDE 內建檔案功能更加高效，無需額外 MCP 服務
+
 ### 第三步：工具使用範例
 
 ```
 🤖 Cursor Chat 範例：
 
+👤 請用記憶體工具記住這個專案的架構資訊
+
+🤖 AI 會自動調用 easy-mcp-memory 工具來儲存資訊
+
 👤 請幫我用瀏覽器工具截圖 https://example.com
 
 🤖 AI 會自動調用 easy-mcp-puppeteer 工具進行截圖
 
-👤 請在記憶中記錄這個專案的架構決策
-
-🤖 AI 會自動調用 easy-mcp-memory 工具存儲資訊
+📝 檔案操作請使用 Cursor 內建功能，更加高效！
 ```
 
 ---
 
 ## ⚡ Quick Start
 
-**New in v2.4.0**: 專業開源架構與 Cursor IDE 最佳化！
+**New in v2.1.0**: Revolutionary intelligent deployment system!
 
 ### Automatic Setup (Recommended)
 
@@ -201,6 +199,7 @@ If you need manual control or forced reinstallation:
 ### Docker Services (Auto-managed)
 | Service | Port | Description | Status |
 |---------|------|-------------|--------|
+| **🗂️ Filesystem** | 8082 | Local file management (read-only mapping to `./view`) | ✅ Active |
 | **🌐 Puppeteer** | 8084 | Headless browser automation | ✅ Active |
 | **🧠 Memory** | 8085 | Memory storage service | ✅ Active |
 | **🔧 Everything** | 8086 | Multi-purpose MCP server | ✅ Active |
@@ -253,7 +252,7 @@ docker compose ps
 docker compose logs -f
 
 # Specific service
-docker compose logs -f memory
+docker compose logs -f filesystem
 ```
 
 **Stop Services:**
@@ -277,6 +276,11 @@ stop.bat
 ---
 
 ## 🔧 API Reference
+
+### Filesystem Service (Port 8082)
+- **Endpoint**: `http://localhost:8082`
+- **Function**: Read-only access to `./view` directory
+- **Usage**: File browsing and content reading
 
 ### Puppeteer Service (Port 8084)
 - **Endpoint**: `http://localhost:8084`
@@ -341,6 +345,7 @@ For comprehensive troubleshooting: [WSL2 Troubleshooting Guide](docs/WSL-Docker-
 - **🛡️ Non-root Execution**: All containers run as non-root users
 - **📊 Resource Limits**: Prevention of resource exhaustion attacks
 - **🌐 Network Isolation**: Custom Docker networks for service isolation
+- **📁 Read-only Mounts**: Filesystem service uses read-only mode
 - **🔐 Principle of Least Privilege**: Each service has minimal required permissions
 
 ### Production Environment Recommendations
@@ -373,7 +378,7 @@ easy-mcp/
 ├── 🐳 docker-compose.yml                 # Service definitions
 ├── ⚙️ claude_desktop_config.json.example # Claude config template
 ├── 🔑 .env.example                       # Environment variables template
-└── 📌 version.txt                        # Version information (v2.4.0)
+└── 📌 version.txt                        # Version information (v2.1.0)
 ```
 
 ---
@@ -422,7 +427,7 @@ This project is licensed under the [MIT License](LICENSE) - see the LICENSE file
 
 - **Current Version**: v2.4.0
 - **Release Date**: 2025-06-29
-- **Key Features**: 專案架構重構，移除 Filesystem 服務，Cursor IDE 最佳化，專業開源標準
+- **Key Features**: 專案架構清理和專業化，Cursor IDE 配置最佳化，專業開源標準
 - **Changelog**: [docs/CHANGELOG.md](docs/CHANGELOG.md)
 - **Repository**: [GitHub](https://github.com/s123104/easy-mcp)
 

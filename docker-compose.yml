@@ -1,10 +1,12 @@
 # Easy-MCP Docker Compose Configuration
-# Version: v2.4.0 - Core MCP Services Architecture
-# Updated: 2025-06-29T22:11:00+08:00
-# Focus: 3 core services optimized for Cursor IDE integration
+# Version: v2.4.0 - Streamlined Professional Architecture
+# Updated: 2025-06-29T22:16:41+08:00
+# Focus: Clean professional open-source architecture with optimized MCP services
 
 # ======= 數據卷配置 =======
 volumes:
+  mcp-filesystem-data:
+    driver: local
   mcp-memory-data:
     driver: local
   mcp-logs:
@@ -14,8 +16,34 @@ volumes:
 secrets:
   mcp_secret_key:
     file: ./secrets/mcp_secret.txt
+  filesystem_access_key:
+    file: ./secrets/filesystem_key.txt
 
 services:
+  # ======= MCP Filesystem Service (Optimized Build) =======
+  mcp-filesystem:
+    build:
+      context: ./mcp-services
+      dockerfile: filesystem.Dockerfile
+    container_name: mcp-filesystem-enhanced
+    restart: unless-stopped
+    volumes:
+      - ./view:/app/projects:rw
+    environment:
+      - NODE_ENV=production
+      - MCP_SERVICE_NAME=filesystem
+      - MCP_LOG_LEVEL=info
+      - MCP_ENABLE_WRITE=true
+      - MCP_ENABLE_DELETE=true
+      - MCP_ENABLE_CREATE=true
+    stdin_open: true
+    tty: true
+    labels:
+      - "mcp.service=filesystem"
+      - "mcp.type=core"
+      - "mcp.version=2.4.0"
+      - "mcp.permissions=read,write,create,delete"
+
   # ======= MCP Puppeteer Service =======
   mcp-puppeteer:
     build:
