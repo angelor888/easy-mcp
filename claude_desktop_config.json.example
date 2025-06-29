@@ -2,7 +2,7 @@
   "_comment": "Easy-MCP Claude Desktop Configuration v2.4.0",
   "_version": "2.4.0",
   "_updated": "2025-06-29T22:16:41+08:00",
-  "_description": "Professional MCP services configuration for Claude Desktop",
+  "_description": "Professional MCP services configuration for Claude Desktop with Docker Compose integration",
   
   "mcpServers": {
     "filesystem": {
@@ -10,16 +10,31 @@
       "args": [
         "exec", "-i", 
         "mcp-filesystem-enhanced",
-        "node", "/app/dist/index.js"
-      ]
+        "mcp-server-filesystem",
+        "/app/projects"
+      ],
+      "env": {
+        "MCP_SERVICE_NAME": "filesystem",
+        "MCP_LOG_LEVEL": "info",
+        "MCP_ENABLE_WRITE": "true",
+        "MCP_ENABLE_DELETE": "true",
+        "MCP_ENABLE_CREATE": "true",
+        "NODE_ENV": "production"
+      }
     },
     "memory": {
       "command": "docker",
       "args": [
         "exec", "-i",
         "mcp-memory-enhanced", 
-        "node", "/app/dist/index.js"
+        "mcp-server-memory"
       ],
+      "env": {
+        "MCP_SERVICE_NAME": "memory",
+        "MCP_LOG_LEVEL": "info",
+        "MEMORY_FILE_PATH": "/app/data/memory.json",
+        "NODE_ENV": "production"
+      },
       "autoapprove": [
         "create_entities",
         "create_relations", 
@@ -33,20 +48,38 @@
       ]
     },
     "puppeteer": {
-      "command": "docker",
-      "args": [
-        "exec", "-i",
-        "mcp-puppeteer-enhanced",
-        "node", "/app/dist/index.js"
-      ]
-    },
-    "everything": {
       "command": "docker", 
       "args": [
         "exec", "-i",
+        "mcp-puppeteer-enhanced", 
+        "mcp-server-puppeteer"
+      ],
+      "env": {
+        "MCP_SERVICE_NAME": "puppeteer",
+        "MCP_LOG_LEVEL": "info",
+        "PUPPETEER_EXECUTABLE_PATH": "/usr/bin/chromium-browser",
+        "MCP_HEADLESS": "true",
+        "MCP_TIMEOUT": "30000",
+        "PUPPETEER_ARGS": "--no-sandbox,--disable-setuid-sandbox,--disable-dev-shm-usage",
+        "NODE_ENV": "production"
+      }
+    },
+    "everything": {
+      "command": "docker",
+      "args": [
+        "exec", "-i",
         "mcp-everything-enhanced",
-        "node", "/app/dist/index.js"
-      ]
+        "mcp-server-everything"
+      ],
+      "env": {
+        "MCP_SERVICE_NAME": "everything",
+        "MCP_LOG_LEVEL": "warn",
+        "MCP_DEMO_MODE": "false",
+        "MCP_ENABLE_METRICS": "false",
+        "MCP_FEATURE_FLAGS": "echo,add,longRunning,sampling",
+        "MCP_NOTIFICATION_INTERVAL": "300000",
+        "NODE_ENV": "production"
+      }
     },
     "mcp-time": {
       "command": "uvx",
