@@ -1,33 +1,106 @@
 {
+  "_comment": "Easy-MCP Claude Desktop Configuration v2.4.0",
+  "_version": "2.4.0",
+  "_updated": "2025-06-29T22:16:41+08:00",
+  "_description": "Professional MCP services configuration for Claude Desktop with Docker Compose integration",
+  
   "mcpServers": {
     "filesystem": {
       "command": "docker",
-      "args": ["exec", "-i", "docker-site-mcp-filesystem", "node", "dist/index.js", "/app/projects"],
-      "url": "http://localhost:8082"
-    },
-    "puppeteer": {
-      "command": "docker",
-      "args": ["exec", "-i", "docker-site-mcp-puppeteer", "node", "dist/index.js"],
-      "url": "http://localhost:8084"
+      "args": [
+        "exec", "-i", 
+        "mcp-filesystem-enhanced",
+        "mcp-server-filesystem",
+        "/app/projects"
+      ],
+      "env": {
+        "MCP_SERVICE_NAME": "filesystem",
+        "MCP_LOG_LEVEL": "info",
+        "MCP_ENABLE_WRITE": "true",
+        "MCP_ENABLE_DELETE": "true",
+        "MCP_ENABLE_CREATE": "true",
+        "NODE_ENV": "production"
+      }
     },
     "memory": {
       "command": "docker",
-      "args": ["exec", "-i", "docker-site-mcp-memory", "node", "dist/index.js"],
-      "url": "http://localhost:8085"
+      "args": [
+        "exec", "-i",
+        "mcp-memory-enhanced", 
+        "mcp-server-memory"
+      ],
+      "env": {
+        "MCP_SERVICE_NAME": "memory",
+        "MCP_LOG_LEVEL": "info",
+        "MEMORY_FILE_PATH": "/app/data/memory.json",
+        "NODE_ENV": "production"
+      },
+      "autoapprove": [
+        "create_entities",
+        "create_relations", 
+        "add_observations",
+        "delete_entities",
+        "delete_observations",
+        "delete_relations",
+        "read_graph",
+        "search_nodes",
+        "open_nodes"
+      ]
+    },
+    "puppeteer": {
+      "command": "docker", 
+      "args": [
+        "exec", "-i",
+        "mcp-puppeteer-enhanced", 
+        "mcp-server-puppeteer"
+      ],
+      "env": {
+        "MCP_SERVICE_NAME": "puppeteer",
+        "MCP_LOG_LEVEL": "info",
+        "PUPPETEER_EXECUTABLE_PATH": "/usr/bin/chromium-browser",
+        "MCP_HEADLESS": "true",
+        "MCP_TIMEOUT": "30000",
+        "PUPPETEER_ARGS": "--no-sandbox,--disable-setuid-sandbox,--disable-dev-shm-usage",
+        "NODE_ENV": "production"
+      }
     },
     "everything": {
       "command": "docker",
-      "args": ["exec", "-i", "docker-site-mcp-everything", "node", "dist/index.js"],
-      "url": "http://localhost:8086"
+      "args": [
+        "exec", "-i",
+        "mcp-everything-enhanced",
+        "mcp-server-everything"
+      ],
+      "env": {
+        "MCP_SERVICE_NAME": "everything",
+        "MCP_LOG_LEVEL": "warn",
+        "MCP_DEMO_MODE": "false",
+        "MCP_ENABLE_METRICS": "false",
+        "MCP_FEATURE_FLAGS": "echo,add,longRunning,sampling",
+        "MCP_NOTIFICATION_INTERVAL": "300000",
+        "NODE_ENV": "production"
+      }
     },
-    "time": {
+    "mcp-time": {
       "command": "uvx",
       "args": ["mcp-server-time", "--local-timezone=Asia/Taipei"]
     },
-    "fetch": {
-      "command": "uvx",
+    "mcp-fetch": {
+      "command": "uvx", 
       "args": ["mcp-server-fetch"]
     }
   },
-  "globalShortcut": "Ctrl+Q"
+  "globalShortcut": "Ctrl+Shift+.",
+  "allowedOrigins": [
+    "localhost:8080",
+    "127.0.0.1:8080",
+    "localhost:3000",
+    "127.0.0.1:3000"
+  ],
+  "mcpSettings": {
+    "timeout": 30000,
+    "maxRetries": 3,
+    "retryDelay": 1000,
+    "logLevel": "info"
+  }
 } 
