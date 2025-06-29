@@ -345,7 +345,6 @@ This project is licensed under the [MIT License](LICENSE) - see the LICENSE file
 - **📚 Documentation**: [docs/](docs/)
 - **🐛 Bug Reports**: [GitHub Issues](https://github.com/s123104/easy-mcp/issues)
 - **💡 Feature Requests**: [GitHub Discussions](https://github.com/s123104/easy-mcp/discussions)
-- **📧 Email**: chenb3681@gmail.com
 
 ---
 
