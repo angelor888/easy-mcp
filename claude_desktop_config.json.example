@@ -1,12 +1,16 @@
 {
+  "_comment": "Easy-MCP Claude Desktop Configuration v2.4.0",
+  "_version": "2.4.0",
+  "_updated": "2025-06-29T22:16:41+08:00",
+  "_description": "Professional MCP services configuration for Claude Desktop",
+  
   "mcpServers": {
     "filesystem": {
       "command": "docker",
       "args": [
         "exec", "-i", 
         "mcp-filesystem-enhanced",
-        "mcp-server-filesystem", 
-        "/app/projects"
+        "node", "/app/dist/index.js"
       ]
     },
     "memory": {
@@ -56,7 +60,9 @@
   "globalShortcut": "Ctrl+Shift+.",
   "allowedOrigins": [
     "localhost:8080",
-    "127.0.0.1:8080"
+    "127.0.0.1:8080",
+    "localhost:3000",
+    "127.0.0.1:3000"
   ],
   "mcpSettings": {
     "timeout": 30000,
