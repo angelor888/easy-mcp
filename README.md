@@ -143,7 +143,7 @@ In Cursor Chat, you can now use these tools:
 
 **Linux/macOS:**
 ```bash
-# Manual environment setup  
+# Manual environment setup
 ./quick-setup.sh
 
 # Force reinstall all components
@@ -189,9 +189,9 @@ In Cursor Chat, you can now use these tools:
 ### Environment Variables
 
 Create `.env` file from template:
-```bash
-cp .env.example .env
-```
+   ```bash
+   cp .env.example .env
+   ```
 
 ---
 
@@ -223,13 +223,13 @@ stop.bat
 ```
 
 **Restart Services:**
-```bash
+     ```bash
 # Windows
 .\start.bat
 
 # Linux/macOS
-./start.sh
-```
+     ./start.sh
+     ```
 
 ---
 
@@ -310,7 +310,7 @@ For comprehensive troubleshooting: [WSL2 Troubleshooting Guide](docs/WSL-Docker-
 easy-mcp/
 ├── 📚 docs/                              # Complete documentation
 │   ├── QUICK-START.md                    # Quick start guide
-│   ├── CLAUDE-CONFIG-GUIDE.md            # Claude Desktop setup  
+│   ├── CLAUDE-CONFIG-GUIDE.md            # Claude Desktop setup
 │   ├── IMPLEMENTATION-SUMMARY.md         # Technical implementation
 │   ├── WSL-Docker-修復指南.md            # WSL2 troubleshooting
 │   └── CHANGELOG.md                      # Version changelog
@@ -353,7 +353,7 @@ We welcome contributions from the community! Please see our [Contributing Guide]
 
 ### Development Setup
 
-```bash
+  ```bash
 # Clone the repository
 git clone https://github.com/s123104/easy-mcp.git
 cd easy-mcp
