@@ -1,34 +1,33 @@
-FROM node:22-alpine
-
-# 安裝 Chromium 和相依套件
-RUN apk add --no-cache \
-    chromium \
-    nss \
-    freetype \
-    harfbuzz \
-    ca-certificates \
-    ttf-freefont
-
-# 設置工作目錄
+FROM node:22.12-alpine AS builder
 WORKDIR /app
 
-# 安裝 puppeteer 服務器（全局安裝）
-RUN npm install -g @modelcontextprotocol/server-puppeteer
+# 複製整個 package.json 和 tsconfig.json
+COPY package.json package-lock.json tsconfig.json ./
 
-# 設置環境變數
+# 安裝所有依賴
+RUN npm install
+
+# 複製源代碼
+COPY . .
+
+# 構建特定的 workspace 包
+RUN npm run build --workspace=@modelcontextprotocol/server-puppeteer
+
+FROM node:22-alpine AS release
+WORKDIR /app
+
+# Puppeteer might need additional system dependencies for Chrome/Chromium
+RUN apk add --no-cache chromium udev ttf-freefont
+
+# 複製構建產物和配置檔案
+COPY --from=builder /app/node_modules/@modelcontextprotocol/server-puppeteer/dist /app/dist
+COPY --from=builder /app/node_modules/@modelcontextprotocol/server-puppeteer/package.json /app/package.json
+
 ENV NODE_ENV=production
 ENV PORT=8084
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
-# 創建非 root 用戶
-RUN addgroup -g 1001 -S mcp && \
-    adduser -S mcp -u 1001 -G mcp && \
-    chown -R mcp:mcp /app
+RUN npm install --omit=dev --ignore-scripts
 
-# 切換到非 root 用戶
-USER mcp
-
-# 使用官方 puppeteer 服務器
-ENTRYPOINT ["mcp-server-puppeteer"]
+ENTRYPOINT ["node", "/app/dist/index.js"]
 EXPOSE ${PORT} 

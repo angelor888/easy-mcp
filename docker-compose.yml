@@ -1,114 +1,88 @@
-# Easy-MCP Docker Compose Configuration
-# Version: v2.4.0 - Streamlined Professional Architecture
-# Updated: 2025-06-29T22:16:41+08:00
-# Focus: Clean professional open-source architecture with optimized MCP services
-
-# ======= 數據卷配置 =======
-volumes:
-  mcp-filesystem-data:
-    driver: local
-  mcp-memory-data:
-    driver: local
-  mcp-logs:
-    driver: local
-
-# ======= Secrets 管理 =======
-secrets:
-  mcp_secret_key:
-    file: ./secrets/mcp_secret.txt
-  filesystem_access_key:
-    file: ./secrets/filesystem_key.txt
-
 services:
-  # ======= MCP Filesystem Service (Optimized Build) =======
   mcp-filesystem:
     build:
       context: ./mcp-services
-      dockerfile: filesystem.Dockerfile
-    container_name: mcp-filesystem-enhanced
+      dockerfile: Dockerfile
+    container_name: docker-site-mcp-filesystem
     restart: unless-stopped
+    user: "1000:1000"
+    mem_limit: "512m"
+    cpus: "0.5"
     volumes:
-      - ./view:/app/projects:rw
+      - ./view:/app/projects
     environment:
       - NODE_ENV=production
-      - MCP_SERVICE_NAME=filesystem
-      - MCP_LOG_LEVEL=info
-      - MCP_ENABLE_WRITE=true
-      - MCP_ENABLE_DELETE=true
-      - MCP_ENABLE_CREATE=true
-    stdin_open: true
+      - MCP_EXCLUDED_PATTERNS=".env,.htpasswd,*.pem,*.key"
+      - PORT=8082
+    command: ["/app/projects"]
+    ports:
+      - "8082:8082"
+    networks:
+      - mcp-net
     tty: true
-    labels:
-      - "mcp.service=filesystem"
-      - "mcp.type=core"
-      - "mcp.version=2.4.0"
-      - "mcp.permissions=read,write,create,delete"
+    stdin_open: true
 
-  # ======= MCP Puppeteer Service =======
+
   mcp-puppeteer:
     build:
       context: ./mcp-services
       dockerfile: puppeteer.Dockerfile
-    container_name: mcp-puppeteer-enhanced
+    container_name: docker-site-mcp-puppeteer
     restart: unless-stopped
-    shm_size: "2gb"
+    user: "1000:1000"
+    mem_limit: "512m"
+    cpus: "0.5"
     environment:
       - NODE_ENV=production
-      - MCP_SERVICE_NAME=puppeteer
-      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
-      - PUPPETEER_ARGS=--no-sandbox,--disable-setuid-sandbox,--disable-dev-shm-usage
-      - MCP_HEADLESS=true
-      - MCP_TIMEOUT=30000
-      - MCP_LOG_LEVEL=info
-    stdin_open: true
+      - PORT=8084
+    ports:
+      - "8084:8084"
+    networks:
+      - mcp-net
     tty: true
-    labels:
-      - "mcp.service=puppeteer"
-      - "mcp.type=automation"
-      - "mcp.version=2.4.0"
+    stdin_open: true
 
-  # ======= MCP Memory Service (Official Configuration) =======
   mcp-memory:
     build:
       context: ./mcp-services
       dockerfile: memory.Dockerfile
-    container_name: mcp-memory-enhanced
+    container_name: docker-site-mcp-memory
     restart: unless-stopped
-    volumes:
-      - mcp-memory-data:/app/data:rw
+    user: "1000:1000"
+    mem_limit: "512m"
+    cpus: "0.5"
     environment:
       - NODE_ENV=production
-      - MCP_SERVICE_NAME=memory
-      - MEMORY_FILE_PATH=/app/data/memory.json
-      - MCP_LOG_LEVEL=info
-    stdin_open: true
+      - PORT=8085
+    ports:
+      - "8085:8085"
+    networks:
+      - mcp-net
     tty: true
-    labels:
-      - "mcp.service=memory"
-      - "mcp.type=storage"
-      - "mcp.version=2.4.0"
-      - "mcp.features=knowledge-graph,persistence"
+    stdin_open: true
 
-  # ======= MCP Everything Service (Optimized) =======
   mcp-everything:
     build:
       context: ./mcp-services
       dockerfile: everything.Dockerfile
-    container_name: mcp-everything-enhanced
+    container_name: docker-site-mcp-everything
     restart: unless-stopped
+    user: "1000:1000"
+    mem_limit: "512m"
+    cpus: "0.5"
     environment:
       - NODE_ENV=production
-      - MCP_SERVICE_NAME=everything
-      - MCP_FEATURE_FLAGS=echo,add,longRunning,sampling
-      - MCP_LOG_LEVEL=warn
-      - MCP_ENABLE_METRICS=false
-      - MCP_DEMO_MODE=false
-      - MCP_NOTIFICATION_INTERVAL=300000
-    stdin_open: true
+      - PORT=8086
+    ports:
+      - "8086:8086"
+    networks:
+      - mcp-net
     tty: true
-    labels:
-      - "mcp.service=everything"
-      - "mcp.type=utility"
-      - "mcp.version=2.4.0"
+    stdin_open: true
 
-
+networks:
+  mcp-net:
+    driver: bridge
+    # Add internal: true if services should only communicate with each other and not externally,
+    # except through explicitly mapped ports. For this task, we'll assume default bridge behavior is fine
+    # unless further restrictions are needed.
