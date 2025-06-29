@@ -1,12 +1,10 @@
 # Easy-MCP Docker Compose Configuration
-# Version: v2.3.0 - Optimized MCP Services
-# Updated: 2025-06-29T11:42:00+08:00
-# Focus: Performance optimized core MCP services with reduced noise
+# Version: v2.4.0 - Core MCP Services Architecture
+# Updated: 2025-06-29T22:11:00+08:00
+# Focus: 3 core services optimized for Cursor IDE integration
 
 # ======= 數據卷配置 =======
 volumes:
-  mcp-filesystem-data:
-    driver: local
   mcp-memory-data:
     driver: local
   mcp-logs:
@@ -16,34 +14,8 @@ volumes:
 secrets:
   mcp_secret_key:
     file: ./secrets/mcp_secret.txt
-  filesystem_access_key:
-    file: ./secrets/filesystem_key.txt
 
 services:
-  # ======= MCP Filesystem Service (Optimized Build) =======
-  mcp-filesystem:
-    build:
-      context: ./mcp-services
-      dockerfile: filesystem.Dockerfile
-    container_name: mcp-filesystem-enhanced
-    restart: unless-stopped
-    volumes:
-      - ./view:/app/projects:rw
-    environment:
-      - NODE_ENV=production
-      - MCP_SERVICE_NAME=filesystem
-      - MCP_LOG_LEVEL=info
-      - MCP_ENABLE_WRITE=true
-      - MCP_ENABLE_DELETE=true
-      - MCP_ENABLE_CREATE=true
-    stdin_open: true
-    tty: true
-    labels:
-      - "mcp.service=filesystem"
-      - "mcp.type=core"
-      - "mcp.version=2.3.0"
-      - "mcp.permissions=read,write,create,delete"
-
   # ======= MCP Puppeteer Service =======
   mcp-puppeteer:
     build:
@@ -65,7 +37,7 @@ services:
     labels:
       - "mcp.service=puppeteer"
       - "mcp.type=automation"
-      - "mcp.version=2.3.0"
+      - "mcp.version=2.4.0"
 
   # ======= MCP Memory Service (Official Configuration) =======
   mcp-memory:
@@ -86,7 +58,7 @@ services:
     labels:
       - "mcp.service=memory"
       - "mcp.type=storage"
-      - "mcp.version=2.3.0"
+      - "mcp.version=2.4.0"
       - "mcp.features=knowledge-graph,persistence"
 
   # ======= MCP Everything Service (Optimized) =======
@@ -109,6 +81,6 @@ services:
     labels:
       - "mcp.service=everything"
       - "mcp.type=utility"
-      - "mcp.version=2.3.0"
+      - "mcp.version=2.4.0"
 
 

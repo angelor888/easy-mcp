@@ -1,29 +1,12 @@
 {
   "$schema": "https://cursor.com/schemas/mcp.schema.json",
   "mcpServers": {
-    "easy-mcp-filesystem": {
-      "command": "docker",
-      "args": [
-        "exec",
-        "-i",
-        "easy-mcp-mcp-filesystem-1",
-        "mcp-server-filesystem",
-        "/app/projects"
-      ],
-      "env": {
-        "MCP_SERVICE_NAME": "filesystem",
-        "MCP_LOG_LEVEL": "info",
-        "MCP_ENABLE_WRITE": "true",
-        "MCP_ENABLE_DELETE": "true",
-        "MCP_ENABLE_CREATE": "true"
-      }
-    },
     "easy-mcp-memory": {
       "command": "docker",
       "args": [
         "exec",
         "-i", 
-        "easy-mcp-mcp-memory-1",
+        "mcp-memory-enhanced",
         "mcp-server-memory"
       ],
       "env": {
@@ -37,13 +20,15 @@
       "args": [
         "exec",
         "-i",
-        "easy-mcp-mcp-puppeteer-1", 
+        "mcp-puppeteer-enhanced", 
         "mcp-server-puppeteer"
       ],
       "env": {
         "MCP_SERVICE_NAME": "puppeteer",
         "MCP_LOG_LEVEL": "info",
-        "PUPPETEER_EXECUTABLE_PATH": "/usr/bin/chromium-browser"
+        "PUPPETEER_EXECUTABLE_PATH": "/usr/bin/chromium-browser",
+        "MCP_HEADLESS": "true",
+        "MCP_TIMEOUT": "30000"
       }
     },
     "easy-mcp-everything": {
@@ -51,14 +36,15 @@
       "args": [
         "exec", 
         "-i",
-        "easy-mcp-mcp-everything-1",
+        "mcp-everything-enhanced",
         "mcp-server-everything"
       ],
       "env": {
         "MCP_SERVICE_NAME": "everything",
         "MCP_LOG_LEVEL": "warn",
         "MCP_DEMO_MODE": "false",
-        "MCP_ENABLE_METRICS": "false"
+        "MCP_ENABLE_METRICS": "false",
+        "MCP_FEATURE_FLAGS": "echo,add,longRunning,sampling"
       }
     }
   }
