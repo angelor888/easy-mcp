@@ -364,7 +364,6 @@ cd easy-mcp
 - **📚 文檔**: [docs/](docs/)
 - **🐛 錯誤報告**: [GitHub Issues](https://github.com/s123104/easy-mcp/issues)
 - **💡 功能請求**: [GitHub Discussions](https://github.com/s123104/easy-mcp/discussions)
-- **📧 電子郵件**: chenb3681@gmail.com
 
 ---
 
