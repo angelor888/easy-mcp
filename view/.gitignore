@@ -1,0 +1,48 @@
+# View Directory .gitignore
+# Easy-MCP Filesystem Service Working Directory
+
+# Ignore all user projects and files
+*
+
+# But keep the original README documentation
+!README.md
+
+# Keep this .gitignore file
+!.gitignore
+
+# Ignore ALL user-created files for privacy protection
+# This includes but is not limited to:
+*.md
+!README.md
+
+# Allow only specific example files if needed (currently none)
+# !*.example
+# !*.template
+# !*.demo
+
+# Ignore common development artifacts
+.DS_Store
+.vscode/
+.idea/
+*.log
+*.tmp
+*.temp
+node_modules/
+.env
+.env.local
+.env.*.local
+
+# Ignore build outputs
+dist/
+build/
+out/
+target/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Description:
+# This directory is mapped to /app/projects in the mcp-filesystem-enhanced Docker container.
+# User projects placed here are private and not tracked by git for security and privacy.
+# Only the original README.md is preserved for documentation purposes. 
