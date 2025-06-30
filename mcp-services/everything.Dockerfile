@@ -1,29 +1,23 @@
-FROM node:22.12-alpine AS builder
+FROM node:22-alpine
+
+# 設置工作目錄
 WORKDIR /app
 
-# 複製整個 package.json 和 tsconfig.json
-COPY package.json package-lock.json tsconfig.json ./
+# 安裝 everything 服務器（全局安裝）
+RUN npm install -g @modelcontextprotocol/server-everything
 
-# 安裝所有依賴
-RUN npm install
-
-# 複製源代碼
-COPY . .
-
-# 構建特定的 workspace 包
-RUN npm run build --workspace=@modelcontextprotocol/server-everything
-
-FROM node:22-alpine AS release
-WORKDIR /app
-
-# 複製構建產物和配置檔案
-COPY --from=builder /app/node_modules/@modelcontextprotocol/server-everything/dist /app/dist
-COPY --from=builder /app/node_modules/@modelcontextprotocol/server-everything/package.json /app/package.json
-
+# 設置環境變數
 ENV NODE_ENV=production
 ENV PORT=8086
 
-RUN npm install --omit=dev --ignore-scripts
+# 創建非 root 用戶
+RUN addgroup -g 1001 -S mcp && \
+    adduser -S mcp -u 1001 -G mcp && \
+    chown -R mcp:mcp /app
 
-ENTRYPOINT ["node", "/app/dist/index.js"]
+# 切換到非 root 用戶
+USER mcp
+
+# 使用官方 everything 服務器
+ENTRYPOINT ["mcp-server-everything"]
 EXPOSE ${PORT} 
