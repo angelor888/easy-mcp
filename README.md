@@ -186,6 +186,24 @@ Create `.env` file from template:
 
 ## 🎛️ Usage
 
+### 🚀 Auto-Start Setup (macOS)
+
+Automatically start Claude Code with Docker and all MCP services on system boot:
+
+**Quick Install:**
+```bash
+cd ~/easy-mcp
+bash auto-start/install.sh
+```
+
+**Features:**
+- ✅ Auto-start on login
+- ✅ Desktop & Spotlight shortcuts
+- ✅ Terminal commands: `cc`, `claude-status`
+- ✅ Automatic Docker & MCP service management
+
+**Learn More:** [Auto-Start Documentation](auto-start/README.md)
+
 ### Service Management
 
 **View Service Status:**
@@ -307,6 +325,13 @@ easy-mcp/
 │   ├── WSL2-Docker-2025-Fix.ps1         # WSL2 repair script
 │   ├── restart-and-setup.ps1            # Auto-restart script
 │   └── setup-wsl-post-reboot.ps1        # Post-reboot setup
+├── 🚀 auto-start/                        # Auto-start setup (macOS)
+│   ├── README.md                         # Auto-start documentation
+│   ├── install.sh                        # One-click installer
+│   ├── uninstall.sh                      # Uninstaller script
+│   ├── scripts/                          # Startup scripts
+│   ├── launch-agents/                    # Launch agent configs
+│   └── templates/                        # App templates
 ├── 🐳 mcp-services/                      # Docker service source code
 ├── 📁 view/                              # Filesystem mount point
 ├── 🚀 start.bat, start.sh                # Intelligent startup scripts
@@ -422,6 +447,12 @@ cd easy-mcp
 - **Resource Indicators (RFC 8707)** - Protection against token misuse attacks
 - **Structured Tool Output** - Enhanced data processing capabilities
 - **Enterprise-grade Security** - Non-root containers, network isolation, resource limits
+
+#### 🚀 **Auto-Start Feature (macOS)**
+- **One-Click Installation** - Simple `bash auto-start/install.sh` setup
+- **System Integration** - Launch agent for automatic startup on login
+- **Multiple Access Methods** - Desktop shortcuts, Spotlight search, terminal commands
+- **Service Management** - Automatic Docker and MCP service handling
 
 ### 🔗 Release Information
 
