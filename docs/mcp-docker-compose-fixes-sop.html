@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Docker Compose Common Issues & Fixes SOP</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none; }
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; }
+        h3 { color: #7f8c8d; }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-x: auto;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .print-button:hover {
+            background-color: #2980b9;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #ecf0f1;
+            margin: 30px 0;
+        }
+        ul {
+            padding-left: 30px;
+        }
+        li {
+            margin: 5px 0;
+        }
+        .checkbox {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button no-print" onclick="window.print()">Save as PDF</button>
+    
+    <h1>MCP Docker Compose Common Issues & Fixes SOP</h1>
+    <p><em>Last updated: 2025-07-07</em></p>
+    
+    <hr>
+    
+    <h2>Purpose</h2>
+    <p>This SOP provides quick solutions for common Docker Compose and MCP integration issues encountered during Easy-MCP setup. Use this as a first-line troubleshooting guide.</p>
+    
+    <hr>
+    
+    <h2>Issue 1: YAML Parse Errors</h2>
+    
+    <h3>Symptoms</h3>
+    <pre><code>yaml: could not find expected ':' (line X)</code></pre>
+    
+    <h3>Root Cause</h3>
+    <p>Stray characters at the beginning of the file or malformed YAML syntax.</p>
+    
+    <h3>Fix</h3>
+    <ol>
+        <li>Open <code>docker-compose.yml</code></li>
+        <li>Check line 1 - must start with <code>#</code> or valid YAML</li>
+        <li>Remove any stray characters (letters, spaces, special chars)</li>
+        <li>Validate with: <code>docker compose config</code></li>
+    </ol>
+    
+    <h3>Prevention</h3>
+    <ul>
+        <li>Always use a YAML linter before committing</li>
+        <li>Never edit docker-compose.yml in non-code editors</li>
+    </ul>
+    
+    <hr>
+    
+    <h2>Issue 2: Duplicate Ports Key</h2>
+    
+    <h3>Symptoms</h3>
+    <pre><code>yaml: mapping key "ports" already defined at line X</code></pre>
+    
+    <h3>Root Cause</h3>
+    <p>Service has multiple <code>ports:</code> blocks defined.</p>
+    
+    <h3>Fix</h3>
+    <ol>
+        <li>Locate the service with duplicate <code>ports:</code> entries</li>
+        <li>Keep only ONE <code>ports:</code> block per service</li>
+        <li>Merge all port mappings under single block:</li>
+    </ol>
+    <pre><code>ports:
+  - "8082:8082"
+  # NOT two separate ports: blocks!</code></pre>
+    
+    <h3>Prevention</h3>
+    <ul>
+        <li>Use search to find all <code>ports:</code> occurrences</li>
+        <li>Maintain one ports block per service</li>
+    </ul>
+    
+    <hr>
+    
+    <h2>Issue 3: Port Mapping Incorrect/Missing</h2>
+    
+    <h3>Symptoms</h3>
+    <ul>
+        <li><code>docker compose ps</code> shows wrong ports or missing mappings</li>
+        <li>Services accessible on wrong ports</li>
+        <li>Connection refused errors</li>
+    </ul>
+    
+    <h3>Root Cause</h3>
+    <p>Incorrect indentation or wrong port numbers.</p>
+    
+    <h3>Fix</h3>
+    <p>Ensure exact indentation and mappings:</p>
+    <pre><code>services:
+  mcp-filesystem:
+    # ... other config ...
+    ports:      # 4 spaces before ports:
+      - "8082:8082"  # 6 spaces before dash</code></pre>
+    
+    <h3>Correct Mappings</h3>
+    <table>
+        <tr>
+            <th>Service</th>
+            <th>Port Mapping</th>
+        </tr>
+        <tr>
+            <td>mcp-filesystem</td>
+            <td>8082:8082</td>
+        </tr>
+        <tr>
+            <td>mcp-puppeteer</td>
+            <td>8084:8084</td>
+        </tr>
+        <tr>
+            <td>mcp-memory</td>
+            <td>8085:8085</td>
+        </tr>
+        <tr>
+            <td>mcp-everything</td>
+            <td>8086:8086</td>
+        </tr>
+    </table>
+    
+    <hr>
+    
+    <h2>Issue 4: MCP Connection Errors in Claude</h2>
+    
+    <h3>Symptoms</h3>
+    <ul>
+        <li>Services show as disconnected in Claude Desktop</li>
+        <li><code>/status</code> shows no MCP servers</li>
+        <li>Connection timeouts</li>
+    </ul>
+    
+    <h3>Root Cause</h3>
+    <ol>
+        <li>Containers not running</li>
+        <li>Config file not in correct location</li>
+        <li>Claude Desktop needs restart</li>
+    </ol>
+    
+    <h3>Fix</h3>
+    <pre><code># 1. Verify containers are running
+docker compose ps
+
+# 2. Copy config to Claude directory
+cp claude_desktop_config.json ~/Library/Application\ Support/Claude/
+
+# 3. Restart Claude Desktop completely
+# Quit Claude Desktop (Cmd+Q)
+# Relaunch Claude Desktop</code></pre>
+    
+    <hr>
+    
+    <h2>Issue 5: Curl Connection Reset</h2>
+    
+    <h3>Symptoms</h3>
+    <pre><code>curl: (56) Recv failure: Connection reset by peer</code></pre>
+    
+    <h3>Root Cause</h3>
+    <p>MCP services use MCP protocol over stdio, NOT HTTP.</p>
+    
+    <h3>Fix</h3>
+    <p>This is expected behavior! Don't use curl to test MCP services.</p>
+    
+    <h3>Correct Testing</h3>
+    <ul>
+        <li>Use <code>/status</code> or <code>mcp list</code> within Claude Desktop chat</li>
+        <li>Check container health with <code>docker compose ps</code></li>
+        <li>View logs with <code>docker compose logs [service-name]</code></li>
+    </ul>
+    
+    <hr>
+    
+    <h2>Issue 6: Git Commit Failures</h2>
+    
+    <h3>Symptoms</h3>
+    <pre><code>Author identity unknown
+fatal: unable to auto-detect email address</code></pre>
+    
+    <h3>Fix</h3>
+    <pre><code># Set local (project-specific) identity
+git config user.email "your-email@example.com"
+git config user.name "Your Name"
+
+# Or set global identity
+git config --global user.email "your-email@example.com"
+git config --global user.name "Your Name"
+git config --global github.user "your-github-username"</code></pre>
+    
+    <hr>
+    
+    <h2>Quick Diagnostic Commands</h2>
+    
+    <pre><code># 1. Validate YAML syntax
+docker compose config
+
+# 2. Check container status
+docker compose ps --format "table {{.Name}}\t{{.Status}}\t{{.Ports}}"
+
+# 3. View service logs
+docker compose logs -f [service-name]
+
+# 4. Full reset
+docker compose down
+docker compose up -d
+
+# 5. Verify port listeners
+lsof -i :8082,8084,8085,8086</code></pre>
+    
+    <hr>
+    
+    <h2>Complete Recovery Sequence</h2>
+    
+    <p>If nothing else works, follow this sequence:</p>
+    
+    <pre><code># 1. Stop everything
+docker compose down -v
+
+# 2. Clean Docker system
+docker system prune -f
+
+# 3. Validate configuration
+docker compose config
+
+# 4. Start fresh
+docker compose up -d
+
+# 5. Verify all services
+docker compose ps
+
+# 6. Copy Claude config
+cp claude_desktop_config.json ~/Library/Application\ Support/Claude/
+
+# 7. Restart Claude Desktop
+# Quit and relaunch Claude Desktop
+
+# 8. Test in Claude
+# Type: /status or mcp list</code></pre>
+    
+    <hr>
+    
+    <h2>Validation Checklist</h2>
+    
+    <ul>
+        <li><input type="checkbox" class="checkbox"> <code>docker compose config</code> - No errors</li>
+        <li><input type="checkbox" class="checkbox"> <code>docker compose ps</code> - All containers "Up"</li>
+        <li><input type="checkbox" class="checkbox"> Port mappings match table above</li>
+        <li><input type="checkbox" class="checkbox"> Config file copied to Claude directory</li>
+        <li><input type="checkbox" class="checkbox"> Claude Desktop restarted</li>
+        <li><input type="checkbox" class="checkbox"> <code>/status</code> shows all 4 services with ✓</li>
+    </ul>
+    
+    <hr>
+    
+    <h2>Pro Tips</h2>
+    
+    <ol>
+        <li><strong>Use the alias</strong>: After setup, use <code>claude-mcp</code> to auto-navigate and launch</li>
+        <li><strong>Check logs first</strong>: <code>docker compose logs</code> often reveals the real issue</li>
+        <li><strong>Mind the indentation</strong>: YAML is space-sensitive, not tab-sensitive</li>
+        <li><strong>One change at a time</strong>: Fix one error, test, then move to next</li>
+        <li><strong>Keep backups</strong>: <code>cp docker-compose.yml docker-compose.yml.backup</code></li>
+    </ol>
+    
+    <hr>
+    
+    <p><em>End of SOP</em></p>
+</body>
+</html>
