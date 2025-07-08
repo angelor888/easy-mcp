@@ -27,3 +27,21 @@ yarn-error.log
 # 其他您不想提交的檔案或目錄
 .husky/_
 
+# User-specific configuration files
+claude_desktop_config.json
+
+# Secrets (but keep example files)
+secrets/*.txt
+!secrets/*.example
+
+# Backup files
+*.backup
+*.bak
+
+# Temporary files
+*.tmp
+*.temp
+
+# External repositories
+jobber-autonomous-agent/
+

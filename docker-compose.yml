@@ -1,9 +1,7 @@
 # Easy-MCP Docker Compose Configuration
-# Version: v2.4.0 - Streamlined Professional Architecture
+# Version: v2.4.0 – Streamlined Professional Architecture
 # Updated: 2025-06-29T22:16:41+08:00
-# Focus: Clean professional open-source architecture with optimized MCP services
 
-# ======= 數據卷配置 =======
 volumes:
   mcp-filesystem-data:
     driver: local
@@ -12,7 +10,6 @@ volumes:
   mcp-logs:
     driver: local
 
-# ======= Secrets 管理 =======
 secrets:
   mcp_secret_key:
     file: ./secrets/mcp_secret.txt
@@ -20,7 +17,7 @@ secrets:
     file: ./secrets/filesystem_key.txt
 
 services:
-  # ======= MCP Filesystem Service (Optimized Build) =======
+  # ======= MCP Filesystem Service =======
   mcp-filesystem:
     build:
       context: ./mcp-services
@@ -38,6 +35,8 @@ services:
       - MCP_ENABLE_CREATE=true
     stdin_open: true
     tty: true
+    ports:
+      - "8082:8082"
     labels:
       - "mcp.service=filesystem"
       - "mcp.type=core"
@@ -51,23 +50,22 @@ services:
       dockerfile: puppeteer.Dockerfile
     container_name: mcp-puppeteer-enhanced
     restart: unless-stopped
+    privileged: true
     shm_size: "2gb"
     environment:
       - NODE_ENV=production
       - MCP_SERVICE_NAME=puppeteer
       - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
-      - PUPPETEER_ARGS=--no-sandbox,--disable-setuid-sandbox,--disable-dev-shm-usage
-      - MCP_HEADLESS=true
-      - MCP_TIMEOUT=30000
-      - MCP_LOG_LEVEL=info
     stdin_open: true
     tty: true
+    ports:
+      - "8084:8084"
     labels:
       - "mcp.service=puppeteer"
-      - "mcp.type=automation"
+      - "mcp.type=utility"
       - "mcp.version=2.4.0"
 
-  # ======= MCP Memory Service (Official Configuration) =======
+  # ======= MCP Memory Service =======
   mcp-memory:
     build:
       context: ./mcp-services
@@ -83,13 +81,15 @@ services:
       - MCP_LOG_LEVEL=info
     stdin_open: true
     tty: true
+    ports:
+      - "8085:8085"
     labels:
       - "mcp.service=memory"
       - "mcp.type=storage"
       - "mcp.version=2.4.0"
       - "mcp.features=knowledge-graph,persistence"
 
-  # ======= MCP Everything Service (Optimized) =======
+  # ======= MCP Everything Service =======
   mcp-everything:
     build:
       context: ./mcp-services
@@ -106,9 +106,9 @@ services:
       - MCP_NOTIFICATION_INTERVAL=300000
     stdin_open: true
     tty: true
+    ports:
+      - "8086:8086"
     labels:
       - "mcp.service=everything"
       - "mcp.type=utility"
       - "mcp.version=2.4.0"
-
-

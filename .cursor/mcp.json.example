@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "easy-mcp-memory": {
+      "command": "docker",
+      "args": ["exec", "-i", "mcp-memory-enhanced", "node", "/app/index.js"],
+      "description": "Knowledge graph persistent storage service"
+    },
+    "easy-mcp-puppeteer": {
+      "command": "docker", 
+      "args": ["exec", "-i", "mcp-puppeteer-enhanced", "node", "/app/index.js"],
+      "description": "Web automation and browser control service"
+    },
+    "easy-mcp-everything": {
+      "command": "docker",
+      "args": ["exec", "-i", "mcp-everything-enhanced", "node", "/app/index.js"],
+      "description": "Multi-purpose MCP utilities service"
+    }
+  }
+}
